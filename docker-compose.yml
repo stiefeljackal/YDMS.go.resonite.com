@@ -1,6 +1,7 @@
 version: '3.8'
 services:
   app:
+    image: "ghcr.io/yellow-dog-man/go.resonite.com:main"
     container_name: go.resonite.com
     build: .
     ports:
