@@ -21,10 +21,20 @@ function getUrl(type, req) {
   }
 }
 
+async function createResoniteApiError(res, type) {
+  if (res.status === 404) {
+    return createError(res.status, `Couldn't find ${type}`);
+  }
+
+  var text = await res.text();
+  return createError(res.status, `Resonite API returned an error: ${text}`);
+}
+
 async function handle(type, req, res, next) {
   var apiResponse = await fetch(getUrl(type, req));
   if (!apiResponse.ok) {
-    return next(createError(apiResponse.status));
+    var error = await createResoniteApiError(apiResponse, type);
+    return next(error);
   }
 
   var json = await apiResponse.json();
@@ -47,12 +57,15 @@ function preProcess(json) {
   json.name = preProcessName(json.name);
 
   if (!json.thumbnailUrl || json.thumbnailUrl === "")
+  {
     json.thumbnailUrl = "/images/noThumbnail.png";
+  }
 
-  if (json.thumbnailUri)
+  if (json.thumbnailUri) {
     json.thumbnailUri = json.thumbnailUri.replace("resdb:///", "https://assets.resonite.com/").replace(".webp", "");
-  else
+  } else {
     json.thumbnailUri = "/images/noThumbnail.png";
+  }
 
   return json;
 }
