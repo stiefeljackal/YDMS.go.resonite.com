@@ -29,7 +29,9 @@ app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = err;
   if (req.app.get('env') !== 'development')
+  {
     res.locals.error.stack = null;
+  }
 
   // render the error page
   res.status(err.status || 500);

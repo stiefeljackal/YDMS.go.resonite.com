@@ -23,7 +23,8 @@ function getUrl(type, req) {
 
 async function createResoniteApiError(res, type) {
   if (res.status === 404) {
-    return createError(res.status, `Couldn't find ${type}`);
+    return createError(res.status, `We couldn't find this ${type}.\n
+    Check your link is valid, and that the session is still open and publicly viewable.`);
   }
 
   var text = await res.text();
