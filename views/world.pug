@@ -1,0 +1,19 @@
+extends layout
+
+block content
+    h1 !{name}
+
+    .center 
+        img(src=thumbnailUri)
+
+    ul
+        li #[strong By:] #{ownerName}
+        li #[strong Description:] #{description}
+        li #[strong Tags:] #{tags.join(", ")}
+    div.center
+        a.btn(href=`resrec:///${ownerId}/${id}`) Open World!
+    p.center 
+        a(href="https://wiki.resonite.com/go.resonite.com") Need Help?
+    h4 Alternative URLs 
+    ul
+        li #[strong Record Url:] #{`resrec:///${ownerId}/${id}`}

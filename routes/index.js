@@ -7,8 +7,8 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
-router.get('/record/:ownerId/:recordId', (req,res, next) => handleRecord);
-router.get('/session/:sessionId', (req,res, next) => handleSession);
+router.get('/record/:ownerId/:recordId', (req,res, next) => handle("world", req, res, next));
+router.get('/session/:sessionId', (req,res, next) => handle("session", req, res, next));
 
 function getUrl(type, req) {
   switch (type) {
@@ -45,9 +45,14 @@ function preProcessName(name) {
 }
 function preProcess(json) {
   json.name = preProcessName(json.name);
-  
+
   if (!json.thumbnailUrl || json.thumbnailUrl === "")
     json.thumbnailUrl = "/images/noThumbnail.png";
+
+  if (json.thumbnailUri)
+    json.thumbnailUri = json.thumbnailUri.replace("resdb:///", "https://assets.resonite.com/").replace(".webp", "");
+  else
+    json.thumbnailUri = "/images/noThumbnail.png";
 
   return json;
 }
