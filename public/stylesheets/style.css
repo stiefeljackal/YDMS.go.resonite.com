@@ -1,0 +1,35 @@
+:root {
+  --background-body: #11151d;
+}
+
+.center {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+.btn {
+  appearance: button;
+  border-radius: 6px;
+  height: 100px;
+  width: 300px;
+  background: #3f9e44;
+  text-align: center;
+  align-content: center;
+  color: #FFF;
+  font-size: 2.5em;
+}
+
+.btn:hover {
+  background: #3f6a47;
+  text-decoration: none;
+}
+.spacer {
+  margin-left: 20px;
+  margin-right: 20px;
+}
