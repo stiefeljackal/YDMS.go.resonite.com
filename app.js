@@ -16,6 +16,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(function(req, res, next) {
+  req.getUrl = function() {
+    return req.protocol + "://" + req.get('host') + req.originalUrl;
+  }
+  return next();
+});
+
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler

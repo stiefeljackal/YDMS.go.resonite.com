@@ -10,6 +10,9 @@ router.get('/', function(req, res, next) {
 router.get('/record/:ownerId/:recordId', (req,res, next) => handle("world", req, res, next));
 router.get('/session/:sessionId', (req,res, next) => handle("session", req, res, next));
 
+router.get('/record/:ownerId/:recordId/json', (req,res, next) => handleJson("world", req, res, next));
+router.get('/session/:sessionId/json', (req,res, next) => handleJson("session", req, res, next));
+
 function getUrl(type, req) {
   switch (type) {
     case "world":
@@ -45,8 +48,35 @@ async function handle(type, req, res, next) {
   }
 
   json = preProcess(json);
+  json.urlPath = req.getUrl();
 
   res.status(200).render(type, json);
+}
+
+async function handleJson(type, req, res, next) {
+  var apiResponse = await fetch(getUrl(type, req));
+  if (!apiResponse.ok) {
+    res.status(apiResponse.status);
+    return next();
+  }
+
+  var json = await apiResponse.json();
+
+  if (type ==="world" && json.recordType !== "world") {
+    res.status(400);
+    return next();
+  }
+
+  json = preProcess(json);
+
+  res.json({
+    title: json.name,
+    author_name: json.name,
+    author_url: req.getUrl().replace("/json",""),
+    provider_name: "Resonite",
+    provider_url: "https://resonite.com"
+  });
+
 }
 
 function preProcessName(name) {
@@ -54,6 +84,7 @@ function preProcessName(name) {
   const end = /<\/color>/gi
   return name.replace(start, "<span style=\"color: $1 ;\">").replace(end, "</span>");
 }
+
 function preProcess(json) {
   json.name = preProcessName(json.name);
 
