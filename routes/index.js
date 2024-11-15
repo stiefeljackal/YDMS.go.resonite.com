@@ -68,6 +68,8 @@ function preProcess(json) {
     json.thumbnailUri = "/images/noThumbnail.png";
   }
 
+  title = json.name;
+
   return json;
 }
 

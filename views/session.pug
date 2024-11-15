@@ -1,5 +1,10 @@
 extends layout
 
+block head
+    meta(property="og:title" content=name)
+    meta(property="og:type" content="resonite.session")
+    meta(property="og:image" content=thumbnailUrl)
+
 block content
     h1 !{name}
 
