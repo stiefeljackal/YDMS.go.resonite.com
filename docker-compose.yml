@@ -1,6 +1,7 @@
 services:
   app:
     image: ghcr.io/yellow-dog-man/go.resonite.com:main
+    pull_policy: always
     container_name: go.resonite.com
     ports:
       - "3002:3000"
