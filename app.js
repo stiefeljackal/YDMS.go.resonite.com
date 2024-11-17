@@ -1,9 +1,13 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var logger = require('morgan');
+import express from 'express';
+import path from 'path';
+import logger from "morgan";
 
-var indexRouter = require('./routes/index');
+import indexRouter from './routes/index.js';
+
+// https://flaviocopes.com/fix-dirname-not-defined-es-module-scope/
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 var app = express();
 
@@ -45,4 +49,4 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+export default app;

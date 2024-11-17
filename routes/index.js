@@ -1,8 +1,11 @@
-var express = require('express');
-var createError = require('http-errors');
+import express from 'express';
+
+import pkg from 'http-errors';
+const {createError} = pkg;
+
+import { preProcess } from '../helpers/preprocessing.js';
+
 var router = express.Router();
-var DOMPurify = require("isomorphic-dompurify");
-var preprocessing = require('../helpers/preprocessing');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -54,7 +57,7 @@ async function handle(type, req, res, next) {
     return next(createError(400, "go.resonite.com only works for Session and world link."));
   }
 
-  json = preprocessing.preProcess(json, type);
+  json = preProcess(json, type);
   json.urlPath = req.getUrl();
 
   res.status(200).render(type, json);
@@ -74,7 +77,7 @@ async function handleJson(type, req, res, next) {
     return next();
   }
 
-  json = preprocessing.preProcess(json, type);
+  json = preProcess(json, type);
   // title is the TOP link
   var title = getOpenGraphTitle(type);
   res.json({
@@ -98,4 +101,4 @@ function getOpenGraphTitle(type) {
   }
 }
 
-module.exports = router;
+export default router;
