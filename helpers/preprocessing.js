@@ -1,3 +1,5 @@
+import DOMPurify from 'isomorphic-dompurify';
+
 function preProcessName(name) {
     const start = /<color="?(.+?)"?>/gi;
     const end = /<\/color>/gi
@@ -27,7 +29,7 @@ function preProcessWorld(json) {
     return json;
 }
 
-function preProcess(json, type) {
+export function preProcess(json, type) {
 
     // ensure page title
     json.title = DOMPurify.sanitize(json.name);
@@ -44,5 +46,3 @@ function preProcess(json, type) {
 
     return json;
 }
-
-module.exports.preProcess = preProcess;
