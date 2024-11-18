@@ -1,7 +1,5 @@
 import express from 'express';
-
-import pkg from 'http-errors';
-const {createError} = pkg;
+import createError from 'http-errors';
 
 import { preProcess } from '../helpers/preprocessing.js';
 
