@@ -21,6 +21,13 @@ for (const word of ["world", "record"]) {
 
 var baseUrl = "https://api.resonite.com";
 
+/**
+ * Gets the url for either the world or session api endpoint.
+ * 
+ * @param {('world'|'session')} type The type of information this is whether it is a world or session.
+ * @param {import('express').Request} req The web request information.
+ * @returns The world or session api endpoint.
+ */
 function getUrl(type, req) {
   switch (type) {
     case "world":
@@ -32,6 +39,13 @@ function getUrl(type, req) {
   }
 }
 
+/**
+ * Creates an error for the Web response of a failed call to the api.
+ * 
+ * @param {Response} res The response of the api request.
+ * @param {('world'|'session')} type The type of information this is whether it is a world or session.
+ * @returns 
+ */
 async function createResoniteApiError(res, type) {
   if (res.status === 404) {
     return createError(res.status, `We couldn't find this ${type}.\n
@@ -42,6 +56,15 @@ async function createResoniteApiError(res, type) {
   return createError(res.status, `Resonite API returned an error: ${text}`);
 }
 
+/**
+ * Handles a request for world or session information.
+ * 
+ * @param {('world'|'session')} type The type of information this is whether it is a world or session.
+ * @param {import('express').Request} req The web request information.
+ * @param {import('express').Response} res The web response object.
+ * @param {import('express').NextFunction} next The function to call to proceed to the next handler.
+ * @returns 
+ */
 async function handle(type, req, res, next) {
   var apiResponse = await fetch(getUrl(type, req));
   if (!apiResponse.ok) {
@@ -61,6 +84,15 @@ async function handle(type, req, res, next) {
   res.status(200).render(type, json);
 }
 
+/**
+ * Handles a json request for world or session information.
+ * 
+ * @param {('world'|'session')} type The type of information this is whether it is a world or session.
+ * @param {import('express').Request} req The web request information.
+ * @param {import('express').Response} res The web response object.
+ * @param {import('express').NextFunction} next The function to call to proceed to the next handler.
+ * @returns 
+ */
 async function handleJson(type, req, res, next) {
   var apiResponse = await fetch(getUrl(type, req));
   if (!apiResponse.ok) {
@@ -87,6 +119,12 @@ async function handleJson(type, req, res, next) {
   });
 }
 
+/**
+ * Generates a title for OpenGraph based on the requested type.
+ * 
+ * @param {('world'|'session')} type The type of information this is whether it is a world or session.
+ * @returns An OpenGraph suitable title for a world or session.
+ */
 function getOpenGraphTitle(type) {
   var app = "Resonite";
   switch(type) {

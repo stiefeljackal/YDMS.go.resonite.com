@@ -4,7 +4,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www.js"
+    "start": "node ./bin/www.js",
+    "debug": "node --inspect-brk=9777 ./bin/www.js"
   },
   "exports": "./start.js",
   "dependencies": {
