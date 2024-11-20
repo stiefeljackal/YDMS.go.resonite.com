@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import logger from "morgan";
+import createError from 'http-errors';
 
 import indexRouter from './routes/index.js';
 
