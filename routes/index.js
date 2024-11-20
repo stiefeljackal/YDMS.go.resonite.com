@@ -7,7 +7,9 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index');
+  res.render('index', {
+    title: 'go.resonite.com Home'
+  });
 });
 
 router.get('/session/:sessionId', (req,res, next) => handle("session", req, res, next));
@@ -42,7 +44,7 @@ function getUrl(type, req) {
 /**
  * Creates an error for the Web response of a failed call to the api.
  * 
- * @param {Response} res The response of the api request.
+ * @param {SessionInfoA} res The response of the api request.
  * @param {('world'|'session')} type The type of information this is whether it is a world or session.
  * @returns 
  */
