@@ -2,6 +2,11 @@
 
 A tiny website to handle go.resonite.com links.
 
+## Development Principles
+1. Keep is Simple - Avoid additional Frameworks or libraries unless they have a defined goal or feature that they unlock.
+2. Keep Dependencies Down - Avoid excess dependencies
+3. Prioritize raw HTML5 - Semantic tags over divs
+
 ## Notes
 This was put together quite quickly, to fix the needs of go.resonite.com not working. The design isn't the best, but it will be ok for now!
 
