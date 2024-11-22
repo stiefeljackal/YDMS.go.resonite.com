@@ -2,6 +2,10 @@
   --background-body: #11151d;
 }
 
+.subheading {
+  font-size: 1rem;
+}
+
 .center {
   display: flex;
   flex-wrap: wrap;
