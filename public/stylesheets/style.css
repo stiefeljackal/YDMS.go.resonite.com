@@ -17,6 +17,29 @@
   font-family: "Poppins", sans-serif;
 }
 
+.infobox {
+  list-style-type: disc;
+  padding-inline-start: 40px;
+}
+
+.infobox__row {
+  display: list-item;
+}
+
+.infobox__heading,
+.infobox__details {
+  display: inline;
+}
+
+.infobox__heading {
+  color: var(--text-bright);
+  font-weight: 600;
+}
+
+.infobox__details {
+  margin-left: 0;
+}
+
 .btn {
   appearance: button;
   border-radius: 6px;
