@@ -86,6 +86,10 @@ async function handle(type, req, res, next) {
     return next(createError(400, "go.resonite.com only works for Session and world link."));
   }
 
+  if (type === "sessionList"){
+    json.title = getOpenGraphTitle(type);
+  }
+
   json = preProcess(json, type);
   json.urlPath = req.getUrl();
 
@@ -140,6 +144,9 @@ function getOpenGraphTitle(type) {
       return `${app} Session`;
     case "world":
       return `${app} World`;
+    case "sessionList":
+      return `${app} Sessions list`;
+      break;
     default:
       return `${app} World`;
   }
