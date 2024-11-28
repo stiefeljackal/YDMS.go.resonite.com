@@ -15,8 +15,8 @@ router.get('/', function(req, res, next) {
 router.get('/session/:sessionId', (req,res, next) => handle("session", req, res, next));
 router.get('/session/:sessionId/json', (req,res, next) => handleJson("session", req, res, next));
 
-router.get('/sessions', (req, res, next) => handle("sessionList", req, res, next));
-router.get('/sessions/json', (req, res, next) => handleJson("sessionList", req, res, next));
+router.get('/session', (req, res, next) => handle("sessionList", req, res, next));
+router.get('/session/json', (req, res, next) => handleJson("sessionList", req, res, next));
 
 // Register world/ and record/
 for (const word of ["world", "record"]) {
