@@ -33,3 +33,14 @@
   background: #3f6a47;
   text-decoration: none;
 }
+
+.grid {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+.grid-item {
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  text-align: center;
+}

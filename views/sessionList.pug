@@ -6,7 +6,7 @@ block content
   div(class="grid")
     each session in sessions
       div(class="grid-item")
-        p= session.Name
+        p= session.name
         p= `Users: ${session.joinedUsers}/${session.maxUsers}`
-        p= session.hostUsername
-        a(href=`/session/${session.sessionId}`) See page
+        p= `Host: ${session.hostUsername}`
+        a(href=`/session/${session.sessionId}`) See details

@@ -43,6 +43,9 @@ function preProcessSessionList(json, count){
         .slice(0, count);
 
     json.sessions = sessions.map((session) => {
+        // We convert the name here since the JSON format for
+        // this is different from the other responses
+        session.name = preProcessName(session.name);
         return preProcessSession(session);
     });
 
