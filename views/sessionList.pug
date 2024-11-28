@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1 Active Sessions
+
+  div(class="grid")
+    each session in sessions
+      div(class="grid-item")
+        p= session.Name
+        p= `Users: ${session.joinedUsers}/${session.maxUsers}`
+        p= session.hostUsername
+        a(href=`/session/${session.sessionId}`) See page

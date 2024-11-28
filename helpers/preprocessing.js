@@ -30,6 +30,24 @@ function preProcessSession(json) {
 
     return json;
 }
+/**
+ * Preprocesses the session list and returns an array of the top X sessions to display on the webpage.
+ * 
+ * @param {SessionsList} json object of the full session API endpoint
+ * @param {SessionCount} int number of sessions to return for the page
+ * @returns The transformed sessions object for viewing.
+ */
+function preProcessSessionList(json, count){
+    const sessions = json
+        .sort((a, b) => b.totalJoinedUsers - a.totalJoinedUsers)
+        .slice(0, count);
+
+    json.sessions = sessions.map((session) => {
+        return preProcessSession(session);
+    });
+
+    return json;
+}
 
 /**
  * Preprocesses the world information return from SkyFrost to a format suitable for viewing.
@@ -57,9 +75,11 @@ function preProcessWorld(json) {
  */
 export function preProcess(json, type) {
 
-    // ensure page title
-    json.title = DOMPurify.sanitize(json.name);
-    json.name = preProcessName(json.name);
+    if (type != "sessionList"){
+        // ensure page title
+        json.title = DOMPurify.sanitize(json.name);
+        json.name = preProcessName(json.name);
+    }
 
     switch (type) {
         case "session":
@@ -67,6 +87,9 @@ export function preProcess(json, type) {
         break;
         case "world":
         json = preProcessWorld(json);
+        break;
+        case "sessionList":
+        json = preProcessSessionList(json, 15);
         break;
     }
 

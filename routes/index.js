@@ -15,6 +15,9 @@ router.get('/', function(req, res, next) {
 router.get('/session/:sessionId', (req,res, next) => handle("session", req, res, next));
 router.get('/session/:sessionId/json', (req,res, next) => handleJson("session", req, res, next));
 
+router.get('/sessions', (req, res, next) => handle("sessionList", req, res, next));
+router.get('/sessions/json', (req, res, next) => handleJson("sessionList", req, res, next));
+
 // Register world/ and record/
 for (const word of ["world", "record"]) {
   router.get(`/${word}/:ownerId/:recordId`, (req,res, next) => handle("world", req, res, next));
@@ -36,6 +39,9 @@ function getUrl(type, req) {
       return `${baseUrl}/users/${req.params.ownerId}/records/${req.params.recordId}/`;
     case "session":
       return `${baseUrl}/sessions/` + req.params.sessionId;
+    case "sessionList":
+      return `${baseUrl}/sessions`
+      break;
     default:
       throw new Error(`Unknown url type: ${type}`);
   }
@@ -117,7 +123,7 @@ async function handleJson(type, req, res, next) {
     author_name: title,
     author_url: req.getUrl().replace("/json",""),
     provider_name: "Resonite",
-    provider_url: "https://resonite.com"
+    provider_url: "https://resonite.com",
   });
 }
 
