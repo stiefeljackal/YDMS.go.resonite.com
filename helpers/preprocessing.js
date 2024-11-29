@@ -30,6 +30,7 @@ function preProcessSession(json) {
 
     return json;
 }
+
 /**
  * Preprocesses the session list and returns an array of the top X sessions to display on the webpage.
  * 
