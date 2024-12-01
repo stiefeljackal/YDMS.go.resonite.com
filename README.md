@@ -15,3 +15,15 @@ This was put together quite quickly, to fix the needs of go.resonite.com not wor
 - [Express/Node Docker Tutorial](https://www.digitalocean.com/community/tutorials/how-to-build-a-node-js-application-with-docker)
 - [pug based Server Side Rendering](https://expressjs.com/en/guide/using-template-engines.html)
 - [Water.css](https://watercss.kognise.dev/) - Prime's Goto CSS "framework"
+
+
+## Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
