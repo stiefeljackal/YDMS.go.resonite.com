@@ -1,0 +1,18 @@
+extends layout
+
+block head
+  link(rel='stylesheet' href='/stylesheets/sessionList.css')
+
+block content
+  h1 Credits
+
+  p go.resonite.com, is 
+   a(href="https://github.com/Yellow-Dog-Man/go.resonite.com") open source.
+   | It was made by the following people!
+
+  div(class="grid")
+    each person in contributors
+      div(class="grid-item")
+        a(href=person.profile)
+            p !{person.name}
+            img(src=person.avatar_url, width=100, height=100)

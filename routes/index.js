@@ -3,6 +3,8 @@ import createError from 'http-errors';
 
 import { preProcess } from '../helpers/preprocessing.js';
 
+import fs from 'node:fs';
+
 var router = express.Router();
 
 /* GET home page. */
@@ -11,6 +13,8 @@ router.get('/', function(req, res, next) {
     title: 'go.resonite.com Home'
   });
 });
+
+router.get('/credits', (req,res,next) => renderCredits(req,res,next));
 
 router.get('/session/:sessionId', (req,res, next) => handle("session", req, res, next));
 router.get('/session/:sessionId/json', (req,res, next) => handleJson("session", req, res, next));
@@ -168,6 +172,18 @@ function getOpenGraphTitle(type) {
     default:
       return `${app} World`;
   }
+}
+
+var contributorsJson = null;
+function renderCredits(req, res, next) {
+  if (contributorsJson !== null)
+    return res.render('credits', contributorsJson);
+
+  const contributorsFile = fs.readFileSync('./.all-contributorsrc');
+  contributorsJson = JSON.parse(contributorsFile);
+
+  console.log(contributorsJson);
+  return res.render('credits', contributorsJson);
 }
 
 export default router;

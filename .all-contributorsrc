@@ -1,4 +1,35 @@
 {
   "projectName": "go.resonite.com",
-  "projectOwner": "Yellow-Dog-Man"
+  "projectOwner": "Yellow-Dog-Man",
+  "contributors": [
+    {
+      "login": "ProbablePrime",
+      "name": "ProbablePrime",
+      "avatar_url": "https://avatars.githubusercontent.com/u/8791132?v=4",
+      "profile": "http://probableprime.co.uk/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "stiefeljackal",
+      "name": "Stiefel Jackal",
+      "avatar_url": "https://avatars.githubusercontent.com/u/20023996?v=4",
+      "profile": "https://github.com/stiefeljackal",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "jae1911",
+      "name": "Jae Lo Presti",
+      "avatar_url": "https://avatars.githubusercontent.com/u/76598503?v=4",
+      "profile": "https://j4.lc/",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "repoType": "github",
+  "commitConvention": "angular"
 }
