@@ -97,8 +97,9 @@ async function handle(type, req, res, next) {
   res.status(200).render(type, json);
 }
 
-function addMetadata(type, json) {
-  json.bodyClass = type;
+function addMetadata(pageType, json) {
+  json.bodyClass = pageType;
+  json.pageType = pageType;
 
   return json;
 }

@@ -1,7 +1,6 @@
 extends layout
 
 block head
-    meta(property="og:title" content=title)
     meta(property="og:type" content="resonite.world")
     meta(property="og:image" content=thumbnailUri)
     meta(property="og:description" content=description)
@@ -15,15 +14,15 @@ block content
         img(src=thumbnailUri alt=`A preview image of the '${title}' world.`)
 
     dl.infobox
-        .infobox__row
-            dt.infobox__heading By: 
-            dd.infobox__details #{ownerName}
-        .infobox__row 
-            dt.infobox__heading Description: 
-            dd.infobox__details #{description}
-        .infobox__row 
-            dt.infobox__heading Tags: 
-            dd.infobox__details #{tags.join(", ")}
+        .row
+            dt By: 
+            dd #{ownerName}
+        .row
+            dt Description: 
+            dd #{description}
+        .row
+            dt Tags: 
+            dd #{tags.join(", ")}
     div.center
         a.btn(href=`resrec:///${ownerId}/${id}`) Open World!
     p.center 

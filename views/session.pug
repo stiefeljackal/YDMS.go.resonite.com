@@ -1,8 +1,6 @@
 extends layout
 
 block head
-    meta(property="og:title" content=title)
-    meta(property="og:type" content="resonite.session")
     meta(property="og:image" content=thumbnailUrl)
     meta(property="og:description" content!=description)
     meta(name="twitter:card" content="summary_large_image")
@@ -15,15 +13,15 @@ block content
         img(src=thumbnailUrl alt=`A preview image of the '${title}' session.`)
 
     dl.infobox
-        .infobox__row
-            dt.infobox__heading Host: 
-            dd.infobox__details #{hostUsername}
-        .infobox__row
-            dt.infobox__heading Version: 
-            dd.infobox__details #{appVersion}
-        .infobox__row
-            dt.infobox__heading Users (#{totalJoinedUsers}/#{maxUsers}): 
-            dd.infobox__details #{sessionUsers.map(user => user.username).join(", ")}
+        .row
+            dt Host: 
+            dd #{hostUsername}
+        .row
+            dt Version: 
+            dd #{appVersion}
+        .row
+            dt Users (#{totalJoinedUsers}/#{maxUsers}): 
+            dd #{sessionUsers.map(user => user.username).join(", ")}
     div.center
         a.btn(href=`ressession:///${sessionId}`) Join Session!
     p.center 

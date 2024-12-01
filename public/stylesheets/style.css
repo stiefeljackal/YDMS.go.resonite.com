@@ -34,35 +34,12 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
-.go-page-content {
+main {
   flex: 1;
 }
 
-.go-page-footer {
+footer {
   width: 100%;
-}
-
-.infobox {
-  list-style-type: disc;
-  padding-inline-start: 40px;
-}
-
-.infobox__row {
-  display: list-item;
-}
-
-.infobox__heading,
-.infobox__details {
-  display: inline;
-}
-
-.infobox__heading {
-  color: var(--text-bright);
-  font-weight: 600;
-}
-
-.infobox__details {
-  margin-left: 0;
 }
 
 .btn {
@@ -82,26 +59,19 @@ body {
   text-decoration: none;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 10px;
+.infobox dl {
+  list-style-type: disc;
 }
 
-.grid-item {
-  border: 1px solid rgba(0, 0, 0, 0.8);
-  padding: 20px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.infobox dt, dd{
+  display: inline;
 }
 
-.grid-item p {
-  margin: 5px 0;
-  font-size: 16px;
-  white-space: normal;
-  word-break: break-word;
-  text-align: center;
+.infobox dt {
+  color: var(--text-bright);
+  font-weight: 600;
+}
+
+.infobox dd {
+  margin-left: 0;
 }

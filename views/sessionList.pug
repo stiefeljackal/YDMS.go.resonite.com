@@ -1,10 +1,9 @@
 extends layout
 
 block head
-  meta(property="og:title" content=title)
-  meta(property="og:type" content="resonite.sessionList")
   meta(property="og:description" content="Active sessions on Resonite")
   link(type="application/json+oembed" href=`${urlPath}json`)
+  link(rel='stylesheet' href='/stylesheets/sessionList.css')
 
 block content
   h1 Active Sessions
