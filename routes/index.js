@@ -74,27 +74,32 @@ async function createResoniteApiError(res, type) {
  * @returns 
  */
 async function handle(type, req, res, next) {
-  var apiResponse = await fetch(getUrl(type, req));
-  if (!apiResponse.ok) {
-    var error = await createResoniteApiError(apiResponse, type);
-    return next(error);
+  try {
+    var apiResponse = await fetch(getUrl(type, req));
+    if (!apiResponse.ok) {
+      var error = await createResoniteApiError(apiResponse, type);
+      return next(error);
+    }
+
+    var json = await apiResponse.json();
+
+    if (type ==="world" && json.recordType !== "world") {
+      return next(createError(400, "go.resonite.com only works for Session and world link."));
+    }
+
+    if (type === "sessionList"){
+      json.title = getOpenGraphTitle(type);
+    }
+
+    json = preProcess(json, type);
+    json = addMetadata(type,json);
+    json.urlPath = req.getUrl();
+
+    res.status(200).render(type, json);
+  } catch (error) {
+    console.log(error);
+    return next(createError(503, "Unable to connect to Resonite API, please try again soon."));
   }
-
-  var json = await apiResponse.json();
-
-  if (type ==="world" && json.recordType !== "world") {
-    return next(createError(400, "go.resonite.com only works for Session and world link."));
-  }
-
-  if (type === "sessionList"){
-    json.title = getOpenGraphTitle(type);
-  }
-
-  json = preProcess(json, type);
-  json = addMetadata(type,json);
-  json.urlPath = req.getUrl();
-
-  res.status(200).render(type, json);
 }
 
 function addMetadata(pageType, json) {
@@ -114,29 +119,34 @@ function addMetadata(pageType, json) {
  * @returns 
  */
 async function handleJson(type, req, res, next) {
-  var apiResponse = await fetch(getUrl(type, req));
-  if (!apiResponse.ok) {
-    res.status(apiResponse.status);
-    return next();
+
+  try {
+    var apiResponse = await fetch(getUrl(type, req));
+    if (!apiResponse.ok) {
+      res.status(apiResponse.status);
+      return next();
+    }
+
+    var json = await apiResponse.json();
+
+    if (type ==="world" && json.recordType !== "world") {
+      res.status(400);
+      return next();
+    }
+
+    json = preProcess(json, type);
+    var title = getOpenGraphTitle(type);
+    res.json({
+      title: title,
+      author_name: title,
+      author_url: req.getUrl().replace("/json",""),
+      provider_name: "Resonite",
+      provider_url: "https://resonite.com",
+    });
+  } catch (error) {
+    console.log(error);
+    return next(createError(503, "Unable to connect to Resonite API, please try again soon."));
   }
-
-  var json = await apiResponse.json();
-
-  if (type ==="world" && json.recordType !== "world") {
-    res.status(400);
-    return next();
-  }
-
-  json = preProcess(json, type);
-  // title is the TOP link
-  var title = getOpenGraphTitle(type);
-  res.json({
-    title: title,
-    author_name: title,
-    author_url: req.getUrl().replace("/json",""),
-    provider_name: "Resonite",
-    provider_url: "https://resonite.com",
-  });
 }
 
 /**
