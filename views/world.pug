@@ -14,10 +14,16 @@ block content
     .center 
         img(src=thumbnailUri alt=`A preview image of the '${title}' world.`)
 
-    ul
-        li #[strong By:] #{ownerName}
-        li #[strong Description:] #{description}
-        li #[strong Tags:] #{tags.join(", ")}
+    dl.infobox
+        .infobox__row
+            dt.infobox__heading By: 
+            dd.infobox__details #{ownerName}
+        .infobox__row 
+            dt.infobox__heading Description: 
+            dd.infobox__details #{description}
+        .infobox__row 
+            dt.infobox__heading Tags: 
+            dd.infobox__details #{tags.join(", ")}
     div.center
         a.btn(href=`resrec:///${ownerId}/${id}`) Open World!
     p.center 
