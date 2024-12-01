@@ -29,7 +29,7 @@ var baseUrl = "https://api.resonite.com";
 /**
  * Gets the url for either the world or session api endpoint.
  * 
- * @param {('world'|'session')} type The type of information this is whether it is a world or session.
+ * @param {('world'|'session'|'sessionList')} type The type of information this is whether it is a world or session.
  * @param {import('express').Request} req The web request information.
  * @returns The world or session api endpoint.
  */
@@ -91,9 +91,16 @@ async function handle(type, req, res, next) {
   }
 
   json = preProcess(json, type);
+  json = addMetadata(type,json);
   json.urlPath = req.getUrl();
 
   res.status(200).render(type, json);
+}
+
+function addMetadata(type, json) {
+  json.bodyClass = type;
+
+  return json;
 }
 
 /**
