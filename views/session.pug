@@ -15,10 +15,16 @@ block content
     .center 
         img(src=thumbnailUrl alt=`A preview image of the '${title}' session.`)
 
-    ul
-        li #[strong Host:] #{hostUsername}
-        li #[strong Version:] #{appVersion}
-        li #[strong Users (#{totalJoinedUsers}/#{maxUsers}):] #{sessionUsers.map(user => user.username).join(", ")}
+    dl.infobox
+        .infobox__row
+            dt.infobox__heading Host: 
+            dd.infobox__details #{hostUsername}
+        .infobox__row
+            dt.infobox__heading Version: 
+            dd.infobox__details #{appVersion}
+        .infobox__row
+            dt.infobox__heading Users (#{totalJoinedUsers}/#{maxUsers}): 
+            dd.infobox__details #{sessionUsers.map(user => user.username).join(", ")}
     div.center
         a.btn(href=`ressession:///${sessionId}`) Join Session!
     p.center 

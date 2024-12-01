@@ -40,6 +40,27 @@ body {
 
 .go-page-footer {
   width: 100%;
+.infobox {
+  list-style-type: disc;
+  padding-inline-start: 40px;
+}
+
+.infobox__row {
+  display: list-item;
+}
+
+.infobox__heading,
+.infobox__details {
+  display: inline;
+}
+
+.infobox__heading {
+  color: var(--text-bright);
+  font-weight: 600;
+}
+
+.infobox__details {
+  margin-left: 0;
 }
 
 .btn {
@@ -57,4 +78,28 @@ body {
 .btn:hover {
   background: #3f6a47;
   text-decoration: none;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.grid-item {
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid-item p {
+  margin: 5px 0;
+  font-size: 16px;
+  white-space: normal;
+  word-break: break-word;
+  text-align: center;
 }
