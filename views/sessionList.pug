@@ -1,0 +1,18 @@
+extends layout
+
+block head
+  meta(property="og:title" content=title)
+  meta(property="og:type" content="resonite.sessionList")
+  meta(property="og:description" content="Active sessions on Resonite")
+  link(type="application/json+oembed" href=`${urlPath}json`)
+
+block content
+  h1 Active Sessions
+
+  div(class="grid")
+    each session in sessions
+      div(class="grid-item")
+        p !{session.name}
+        p= `Users: ${session.joinedUsers}/${session.maxUsers}`
+        p= `Host: ${session.hostUsername}`
+        a(href=`/session/${session.sessionId}`) See details
