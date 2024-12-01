@@ -75,3 +75,7 @@ footer {
 .infobox dd {
   margin-left: 0;
 }
+
+.small a {
+  font-size: 0.7em;
+}
