@@ -4,6 +4,7 @@ import createError from 'http-errors';
 import { preProcess } from '../helpers/preprocessing.js';
 
 import fs from 'node:fs';
+import { createSearchRequestInit } from '../helpers/search.js';
 
 var router = express.Router();
 
@@ -22,6 +23,9 @@ router.get('/session/:sessionId/json', (req,res, next) => handleJson("session", 
 router.get('/sessions', (req, res, next) => handle("sessionList", req, res, next));
 router.get('/sessions/json', (req, res, next) => handleJson("sessionList", req, res, next));
 
+router.get('/world', (req, res, next) => handle('worldList', req, res, next, createSearchRequestInit(req.params)));
+router.get('/world/json', (req, res, next) => handleJson('worldList', req, res, next, createSearchRequestInit(req.params)));
+
 // Register world/ and record/
 for (const word of ["world", "record"]) {
   router.get(`/${word}/:ownerId/:recordId`, (req,res, next) => handle("world", req, res, next));
@@ -32,8 +36,8 @@ var baseUrl = "https://api.resonite.com";
 
 /**
  * Gets the url for either the world or session api endpoint.
- * 
- * @param {('world'|'session'|'sessionList')} type The type of information this is whether it is a world or session.
+ *
+ * @param {HandleType} type The type of information this is whether it is a world or session.
  * @param {import('express').Request} req The web request information.
  * @returns The world or session api endpoint.
  */
@@ -41,6 +45,8 @@ function getUrl(type, req) {
   switch (type) {
     case "world":
       return `${baseUrl}/users/${req.params.ownerId}/records/${req.params.recordId}/`;
+    case "worldList":
+      return `${baseUrl}/records/pagedSearch`
     case "session":
       return `${baseUrl}/sessions/` + req.params.sessionId;
     case "sessionList":
@@ -53,10 +59,10 @@ function getUrl(type, req) {
 
 /**
  * Creates an error for the Web response of a failed call to the api.
- * 
- * @param {SessionInfoA} res The response of the api request.
- * @param {('world'|'session')} type The type of information this is whether it is a world or session.
- * @returns 
+ *
+ * @param {Response} res The response of the api request.
+ * @param {HandleType} type The type of information this is whether it is a world or session.
+ * @returns
  */
 async function createResoniteApiError(res, type) {
   if (res.status === 404) {
@@ -72,16 +78,17 @@ async function createResoniteApiError(res, type) {
 
 /**
  * Handles a request for world or session information.
- * 
- * @param {('world'|'session')} type The type of information this is whether it is a world or session.
+ *
+ * @param {HandleType} type The type of information this is whether it is a world or session.
  * @param {import('express').Request} req The web request information.
  * @param {import('express').Response} res The web response object.
  * @param {import('express').NextFunction} next The function to call to proceed to the next handler.
- * @returns 
+ * @param {RequestInit?} [reqInit=undefined] The optional request body to send to the API.
+ * @returns
  */
-async function handle(type, req, res, next) {
+async function handle(type, req, res, next, reqInit = undefined) {
   try {
-    var apiResponse = await fetch(getUrl(type, req));
+    var apiResponse = await fetch(getUrl(type, req), reqInit);
     if (!apiResponse.ok) {
       var error = await createResoniteApiError(apiResponse, type);
       return next(error);
@@ -93,7 +100,7 @@ async function handle(type, req, res, next) {
       return next(createError(400, "go.resonite.com only works for Session and world link."));
     }
 
-    if (type === "sessionList"){
+    if (type !== 'world' && type !== 'session'){
       json.title = getOpenGraphTitle(type);
     }
 
@@ -117,17 +124,17 @@ function addMetadata(pageType, json) {
 
 /**
  * Handles a json request for world or session information.
- * 
- * @param {('world'|'session')} type The type of information this is whether it is a world or session.
+ *
+ * @param {HandleType} type The type of information this is whether it is a world or session.
  * @param {import('express').Request} req The web request information.
  * @param {import('express').Response} res The web response object.
  * @param {import('express').NextFunction} next The function to call to proceed to the next handler.
- * @returns 
+ * @param {RequestInit?} [reqInit=undefined] The optional request body to send to the API.
+ * @returns
  */
-async function handleJson(type, req, res, next) {
-
+async function handleJson(type, req, res, next, reqInit = undefined) {
   try {
-    var apiResponse = await fetch(getUrl(type, req));
+    var apiResponse = await fetch(getUrl(type, req), reqInit);
     if (!apiResponse.ok) {
       res.status(apiResponse.status);
       return next();
@@ -142,6 +149,7 @@ async function handleJson(type, req, res, next) {
 
     json = preProcess(json, type);
     var title = getOpenGraphTitle(type);
+
     res.json({
       title: title,
       author_name: title,
@@ -157,8 +165,8 @@ async function handleJson(type, req, res, next) {
 
 /**
  * Generates a title for OpenGraph based on the requested type.
- * 
- * @param {('world'|'session')} type The type of information this is whether it is a world or session.
+ *
+ * @param {HandleType} type The type of information this is whether it is a world or session.
  * @returns An OpenGraph suitable title for a world or session.
  */
 function getOpenGraphTitle(type) {
@@ -170,7 +178,8 @@ function getOpenGraphTitle(type) {
       return `${app} World`;
     case "sessionList":
       return `${app} Sessions list`;
-      break;
+    case "worldList":
+      return `${app} World List`;
     default:
       return `${app} World`;
   }
