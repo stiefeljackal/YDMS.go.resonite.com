@@ -1,0 +1,19 @@
+extends layout
+
+block head
+  meta(property="og:description" content="Published worlds on Resonite")
+  link(type="application/json+oembed" href=`${urlPath}json`)
+  link(rel='stylesheet' href='/stylesheets/worldList.css')
+
+block content
+  h1 World List
+  ol.listing
+    each world in records
+      li
+        a(href=`${world.goUri}`).listing-item
+          h2.listing-item__heading !{world.name}
+          p.listing-item__author
+            em By #{world.ownerName}
+          div.thumbnail
+            img(src=`${world.thumbnailUri}`, alt='', width='280', height='140', loading='lazy')
+          p.listing-item__description #{world.description || '(No Description)'}
