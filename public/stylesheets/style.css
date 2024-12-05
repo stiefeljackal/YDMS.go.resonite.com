@@ -67,6 +67,22 @@ footer {
   text-decoration: none;
 }
 
+.icon-btn {
+  border-radius: 50%;
+  background: none;
+}
+
+.icon-btn:hover,
+.icon-btn:focus {
+  background: none;
+  color: var(--links)
+}
+
+.icon-btn > svg {
+  width: 100%;
+  height: 100%;
+}
+
 .infobox dl {
   list-style-type: disc;
 }
