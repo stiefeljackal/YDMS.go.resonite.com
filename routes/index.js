@@ -105,8 +105,7 @@ async function handle(type, req, res, next, reqInit = undefined) {
     }
 
     json = preProcess(json, type);
-    json = addMetadata(type,json);
-    json.urlPath = req.getUrl();
+    json = addMetadata(type, json, req);
 
     res.status(200).render(type, json);
   } catch (error) {
@@ -115,11 +114,22 @@ async function handle(type, req, res, next, reqInit = undefined) {
   }
 }
 
-function addMetadata(pageType, json) {
-  json.bodyClass = pageType;
-  json.pageType = pageType;
-
-  return json;
+/**
+ * Adds metadata to the json response that is used for the pug renderer.
+ * 
+ * @param {HandleType} pageType The type of information this is whether it is a world or session.
+ * @param {BaseWorldSessionInfo} json The JSON result from the Resonite API based on the given handle type.
+ * @param {import('express').Request} req The web request information.
+ * @return BaseWorldSessionInfo
+ */
+function addMetadata(pageType, json, req) {
+  return Object.assign(json, {
+    bodyClass: pageType,
+    pageType,
+    query: req.query,
+    params: req.params,
+    urlPath: req.getUrl()
+  });
 }
 
 /**
