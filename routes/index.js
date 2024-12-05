@@ -23,8 +23,8 @@ router.get('/session/:sessionId/json', (req,res, next) => handleJson("session", 
 router.get('/sessions', (req, res, next) => handle("sessionList", req, res, next));
 router.get('/sessions/json', (req, res, next) => handleJson("sessionList", req, res, next));
 
-router.get('/world', (req, res, next) => handle('worldList', req, res, next, createSearchRequestInit(req.params)));
-router.get('/world/json', (req, res, next) => handleJson('worldList', req, res, next, createSearchRequestInit(req.params)));
+router.get('/world', (req, res, next) => handle('worldList', req, res, next, createSearchRequestInit({ ...req.query, ...req.params })));
+router.get('/world/json', (req, res, next) => handleJson('worldList', req, res, next, createSearchRequestInit({ ...req.query, ...req.params })));
 
 // Register world/ and record/
 for (const word of ["world", "record"]) {
@@ -51,7 +51,6 @@ function getUrl(type, req) {
       return `${baseUrl}/sessions/` + req.params.sessionId;
     case "sessionList":
       return `${baseUrl}/sessions`
-      break;
     default:
       throw new Error(`Unknown url type: ${type}`);
   }
