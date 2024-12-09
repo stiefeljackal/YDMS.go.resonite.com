@@ -1,4 +1,8 @@
 :root {
+  --color-hero-yellow: #f8f770;
+  --color-mid-yellow: #a0a14e;
+  --color-sub-yellow: #484a2c;
+  --color-dark-yellow: #2b2e26;
   --color-hero-green: #59eb5c;
   --color-mid-green: #3f9e44;
   --color-sub-green: #24512c;
@@ -28,6 +32,11 @@ body {
   box-sizing: border-box;
   max-width: 820px;
   padding: 20px 10px;
+}
+
+:is(h1, h2, h3, h4, h5, h6) svg {
+  width: 1.4em;
+  height: 1.4em;
 }
 
 .subheading {

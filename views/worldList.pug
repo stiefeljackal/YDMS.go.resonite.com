@@ -19,7 +19,12 @@ block content
       each world in records
         li
           a(href=`${world.goUri}`).listing-item
-            h2.listing-item__heading !{world.name}
+            h2.listing-item__heading
+              if (world.isFeatured)
+                +svg('/images/reso_featured_ribbon.svg#featured_ribbon')(aria-hidden=true).listing-item__featured-ribbon
+              | !{world.name}
+              if (world.isFeatured)
+                span.visually-hidden | Featured World
             p.listing-item__author
               em By #{world.ownerName}
             div.thumbnail

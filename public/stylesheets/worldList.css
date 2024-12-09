@@ -54,6 +54,9 @@
 
 .listing-item__heading {
   grid-area: heading;
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 4px;
   margin: 0;
   font-size: 1rem;
   font-weight: 600;
@@ -62,6 +65,10 @@
 
 .listing-item__author {
   grid-area: author;
+}
+
+.listing-item__featured-ribbon {
+  color: var(--color-hero-yellow)
 }
 
 .listing-item:hover > .listing-item__heading {
