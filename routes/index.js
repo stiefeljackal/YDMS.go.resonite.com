@@ -104,7 +104,7 @@ async function handle(type, req, res, next, reqInit = undefined) {
     }
 
     json = preProcess(json, type);
-    json = addMetadata(type, json, req);
+    json = addMetadata(type, json, req, reqInit);
 
     res.status(200).render(type, json);
   } catch (error) {
@@ -119,15 +119,17 @@ async function handle(type, req, res, next, reqInit = undefined) {
  * @param {HandleType} pageType The type of information this is whether it is a world or session.
  * @param {BaseWorldSessionInfo} json The JSON result from the Resonite API based on the given handle type.
  * @param {import('express').Request} req The web request information.
+ * @param {RequestInit} [reqInit=undefined] The optional request body used to send to the API if defined.
  * @return BaseWorldSessionInfo
  */
-function addMetadata(pageType, json, req) {
+function addMetadata(pageType, json, req, reqInit = undefined) {
   return Object.assign(json, {
     bodyClass: pageType,
     pageType,
     query: req.query,
     params: req.params,
-    urlPath: req.getUrl()
+    urlPath: req.getUrl(),
+    apiInitBody: JSON.parse(reqInit?.body ?? null)
   });
 }
 

@@ -1,12 +1,14 @@
 extends layout
 
 include mixins/searchbox.pug
+include mixins/pagination.pug
 
 block head
   meta(property="og:description" content="Published worlds on Resonite")
   link(type="application/json+oembed" href=`${urlPath}json`)
   link(rel='stylesheet' href='/stylesheets/worldList.css')
   link(rel='stylesheet' href='/stylesheets/searchbox.css')
+  link(rel='stylesheet' href='/stylesheets/pagination.css')
 
 block content
   h1 World List
@@ -23,6 +25,7 @@ block content
             div.thumbnail
               img(src=`${world.thumbnailUri}`, alt='', width='280', height='140', loading='lazy')
             p.listing-item__description #{world.description || '(No Description)'}
+    +pagination(urlPath, apiInitBody.offset + 1, apiInitBody.offset + records.length, [query.pageIndex, parseInt(query.pageIndex) + 1])
   else
     p
     | Resonite did not find any worlds that matched the term(s) "
