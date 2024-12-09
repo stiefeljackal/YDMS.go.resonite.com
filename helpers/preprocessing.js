@@ -70,6 +70,7 @@ function preProcessWorld(json) {
     json.thumbnailUri = "/images/noThumbnail.png";
   }
 
+  json.isFeatured = !!json.submissions?.[0]?.featured;
   // Convert to UTC to have a standard timezone
   // This also helps people document worlds on the wiki
   json.firstPublishTime = new Date(json.firstPublishTime).toUTCString();
