@@ -1,5 +1,4 @@
 :root {
-  --srch-btn-size: 36px;
   --srch-input-spacing: 8px;
 }
 
@@ -13,7 +12,7 @@
 .search__textinput {
   flex: 1;
   padding: var(--srch-input-spacing);
-  padding-right: calc(var(--srch-btn-size) + var(--srch-input-spacing));
+  padding-right: calc(var(--btn--icon-only-size) + var(--srch-input-spacing));
   margin: 0;
   background: var(--background-alt)
 }
@@ -25,9 +24,6 @@
 .search__btn {
   position: absolute;
   right: 0;
-  width: var(--srch-btn-size);
-  height: var(--srch-btn-size);
-  padding: 4px;
   margin: 0 var(--srch-input-spacing) 0 0;
   background: none;
 }
