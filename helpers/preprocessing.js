@@ -1,7 +1,7 @@
 import DOMPurify from 'isomorphic-dompurify';
 
 function sanitizeHTML(input) {
-    return DOMPurify.sanitize(input, {ALLOWED_TAGS: ['span']});
+    return DOMPurify.sanitize(input, {ALLOWED_TAGS: ['span'], ALLOWED_ATTR: ['style']});
 }
 
 /**
