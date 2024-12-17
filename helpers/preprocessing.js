@@ -1,5 +1,9 @@
 import DOMPurify from 'isomorphic-dompurify';
 
+function sanitizeHTML(input) {
+    return DOMPurify.sanitize(input, {ALLOWED_TAGS: ['span']});
+}
+
 /**
  * Converts the world or session name to its HTML equivalent.
  * 
@@ -8,8 +12,9 @@ import DOMPurify from 'isomorphic-dompurify';
  */
 function preProcessName(name) {
     const start = /<color="?(.+?)"?>/gi;
-    const end = /<\/color>/gi
-    return name.replace(start, "<span style=\"color: $1;\">").replace(end, "</span>");
+    const end = /<\/color>/gi;
+    var styleTags = name.replace(start, "<span style=\"color: $1;\">").replace(end, "</span>");
+    return sanitizeHTML(styleTags);
 }
 
 /**
@@ -80,8 +85,9 @@ function preProcessWorld(json) {
 export function preProcess(json, type) {
 
     if (type != "sessionList"){
-        // ensure page title
-        json.title = DOMPurify.sanitize(json.name);
+        json.title = DOMPurify.sanitize(json.name); // No tags in title
+
+        // Handle name for inclusion in the actual page.
         json.name = preProcessName(json.name);
     }
 
