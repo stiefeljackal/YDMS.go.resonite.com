@@ -38,6 +38,7 @@ function createWorldSerachParams(searchStr, pageIndex) {
     private: false,
     sortBy: 'FirstPublishTime',
     sortDirection: 'Descending',
+    submittedTo: 'G-Resonite',
     optionalTags,
     requiredTags,
     excludedTags
