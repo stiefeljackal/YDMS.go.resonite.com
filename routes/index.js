@@ -283,12 +283,9 @@ function addMMC(worldRecord) {
 
   var categories = matchCategories(worldRecord.tags);
 
-  var multipleCategories = categories.length > 1; // IN MULTIPLE BAD
-
   worldRecord.mmc = {
     entered:true,
-    categories,
-    multipleCategories
+    categories
   }
 
   return worldRecord;

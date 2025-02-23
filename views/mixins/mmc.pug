@@ -5,9 +5,14 @@ mixin mmcMixin(mmcData)
             img(src='/images/CreatorJam.png')
         ul
             li ✅ This world is entered into the MMC 2025!
-            li It is entered into the following Categories:
-                ul
-                    each category in mmcData.categories
-                        li ✅ !{category.title}
-            if mmcData.multipleCategories
-                li ❌ It is entered into more than one category, please fix this!
+            if mmcData.categories.length > 0
+                li It is entered into the following Categories:
+                    ul
+                        each category in mmcData.categories
+                            li ✅ !{category.title}
+            if mmcData.categories.length > 1
+                li ❌ It is entered into more than one category.
+            if mmcData.categories.length == 0
+                li ❌ It is entered into no categories.
+
+    p See #[a(href='https://wiki.resonite.com/MMC_2025') our wiki] for more information on MMC.
