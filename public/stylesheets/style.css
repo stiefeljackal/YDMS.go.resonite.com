@@ -195,3 +195,7 @@ footer {
   clip-path: inset(50%);
   overflow: hidden;
 }
+
+.mmc h2 img {
+  width: 1.5em;
+}

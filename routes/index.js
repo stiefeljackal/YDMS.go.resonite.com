@@ -106,6 +106,10 @@ async function handle(type, req, res, next, reqInit = undefined) {
     json = preProcess(json, type);
     json = addMetadata(type, json, req, reqInit);
 
+    if (type =="world") {
+      json = addMMC(json);
+    }
+
     res.status(200).render(type, json);
   } catch (error) {
     console.log(error);
@@ -204,8 +208,90 @@ function renderCredits(req, res, next) {
   const contributorsFile = fs.readFileSync('./.all-contributorsrc');
   contributorsJson = JSON.parse(contributorsFile);
 
-  console.log(contributorsJson);
   return res.render('credits', contributorsJson);
+}
+
+var competitionTag = "mmc25"; //TODO: handle years.
+
+var categories = [
+  {
+    title: "World Social",
+    requiredTags: ["world", "social"]
+  },
+  {
+    title: "World Game",
+    requiredTags: ["world", "game"]
+  },
+  {
+    title: "World Misc",
+    requiredTags: ["world", "misc"]
+  },
+  // Avatars
+  {
+    title: "Avatars",
+    requiredTags: ["avatar", "avatars"]
+  },
+  {
+    title: "Avatar Miscellaneous",
+    requiredTags: ["avatar", "misc"]
+  },
+  // Other
+  {
+    title: "Other: Tools, Apps & Utilities",
+    requiredTags: ["other", "tau"]
+  },
+  {
+    title: "Other: Miscellaneous",
+    requiredTags: ["other", "misc"]
+  },
+  // Single tag categories
+  {
+    title: "Art",
+    requiredTags: ["art"]
+  },
+  {
+    title: "Education, Science and Data Visualization",
+    requiredTags: ["esd"]
+  },
+  {
+    title: "Meme",
+    requiredTags: ["meme"]
+  },
+  {
+    title: "Narrative",
+    requiredTags: ["narrative"]
+  }
+]
+
+function matchCategories(tags) {
+  var cats = [];
+  for(const category of categories) {
+    var entered = category.requiredTags.every(tag => tags.includes(tag));
+
+    if (!entered)
+      continue;
+
+    cats.push(category);
+  }
+
+  return cats;
+}
+
+function addMMC(worldRecord) {
+  if (!worldRecord.tags.includes(competitionTag))
+    return worldRecord;
+
+  var categories = matchCategories(worldRecord.tags);
+
+  var multipleCategories = categories.length > 1; // IN MULTIPLE BAD
+
+  worldRecord.mmc = {
+    entered:true,
+    categories,
+    multipleCategories
+  }
+
+  return worldRecord;
 }
 
 export default router;

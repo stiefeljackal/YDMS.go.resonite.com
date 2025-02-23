@@ -1,5 +1,7 @@
 extends layout
 
+include mixins/mmc.pug
+
 block head
     meta(property="og:type" content="resonite.world")
     meta(property="og:image" content=thumbnailUri)
@@ -36,3 +38,5 @@ block content
     h2.subheading Alternative URLs 
     ul
         li #[strong Record Url:] #{`resrec:///${ownerId}/${id}`}
+    if mmc
+        +mmcMixin(mmc)
