@@ -2,6 +2,7 @@ import express from 'express';
 import createError from 'http-errors';
 
 import { preProcess } from '../helpers/preprocessing.js';
+import { addMMC } from '../helpers/mmc.js';
 
 import fs from 'node:fs';
 import { createSearchRequestInit } from '../helpers/search.js';
@@ -211,84 +212,6 @@ function renderCredits(req, res, next) {
   return res.render('credits', contributorsJson);
 }
 
-var competitionTag = "mmc25"; //TODO: handle years.
 
-var categories = [
-  {
-    title: "World Social",
-    requiredTags: ["world", "social"]
-  },
-  {
-    title: "World Game",
-    requiredTags: ["world", "game"]
-  },
-  {
-    title: "World Misc",
-    requiredTags: ["world", "misc"]
-  },
-  // Avatars
-  {
-    title: "Avatars",
-    requiredTags: ["avatar", "avatars"]
-  },
-  {
-    title: "Avatar Miscellaneous",
-    requiredTags: ["avatar", "misc"]
-  },
-  // Other
-  {
-    title: "Other: Tools, Apps & Utilities",
-    requiredTags: ["other", "tau"]
-  },
-  {
-    title: "Other: Miscellaneous",
-    requiredTags: ["other", "misc"]
-  },
-  // Single tag categories
-  {
-    title: "Art",
-    requiredTags: ["art"]
-  },
-  {
-    title: "Education, Science and Data Visualization",
-    requiredTags: ["esd"]
-  },
-  {
-    title: "Meme",
-    requiredTags: ["meme"]
-  },
-  {
-    title: "Narrative",
-    requiredTags: ["narrative"]
-  }
-]
-
-function matchCategories(tags) {
-  var cats = [];
-  for(const category of categories) {
-    var entered = category.requiredTags.every(tag => tags.includes(tag));
-
-    if (!entered)
-      continue;
-
-    cats.push(category);
-  }
-
-  return cats;
-}
-
-function addMMC(worldRecord) {
-  if (!worldRecord.tags.includes(competitionTag))
-    return worldRecord;
-
-  var categories = matchCategories(worldRecord.tags);
-
-  worldRecord.mmc = {
-    entered:true,
-    categories
-  }
-
-  return worldRecord;
-}
 
 export default router;

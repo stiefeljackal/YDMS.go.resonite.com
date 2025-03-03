@@ -10,7 +10,8 @@
   --color-hero-blue: #61d1fa;
   --color-mid-blue: #458fab;
   --color-sub-blue: #284c5d;
-  --color-dark-blue: #1a2a36; 
+  --color-dark-blue: #1a2a36;
+  --color-hero-red: #ff7676; 
   --background-body: #11151d;
   --border-radius: 8px;
   --btn--icon-only-size: 36px;
@@ -198,4 +199,9 @@ footer {
 
 .mmc h2 img {
   width: 1.5em;
+}
+
+.warning {
+  color: var(--color-hero-red);
+  font-weight: bold;
 }

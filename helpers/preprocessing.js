@@ -75,6 +75,8 @@ function preProcessWorld(json) {
   // This also helps people document worlds on the wiki
   json.firstPublishTime = new Date(json.firstPublishTime).toUTCString();
   json.lastModificationTime = new Date(json.lastModificationTime).toUTCString();
+  json.creationTime = new Date(json.creationTime).toUTCString();
+  json.isPublished = json.submissions != null && json.submissions.length > 0;
 
   return json;
 }

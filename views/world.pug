@@ -23,8 +23,16 @@ block content
             dt Description: 
             dd #{description}
         .row
-            dt First published on: 
-            dd #{firstPublishTime}
+            dt Created on: 
+            dd #{creationTime}
+        if isPublished
+            .row
+                dt First published on: 
+                dd #{firstPublishTime}
+        else
+            .row
+                dt Published: 
+                dd.warning Not Published
         .row
             dt Last modified on: 
             dd #{lastModificationTime}

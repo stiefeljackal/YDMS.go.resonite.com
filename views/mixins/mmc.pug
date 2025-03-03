@@ -4,15 +4,22 @@ mixin mmcMixin(mmcData)
             | MMC 2025 Information
             img(src='/images/CreatorJam.png')
         ul
-            li ✅ This world is entered into the MMC 2025!
-            if mmcData.categories.length > 0
+            if (mmcData.entered)
+                li ✅ This world is entered into the MMC 2025!
+                if isPublished
+                    li ✅ This world is published!
+                else
+                    li.warning ❌ This world is #[strong NOT] published!
+                if mmcData.categories.length > 0
                 li It is entered into the following Categories:
                     ul
                         each category in mmcData.categories
                             li ✅ !{category.title}
-            if mmcData.categories.length > 1
-                li ❌ It is entered into more than one category.
-            if mmcData.categories.length == 0
-                li ❌ It is entered into no categories.
+                if mmcData.categories.length > 1
+                    li.warning ❌ It is entered into more than one category.
+                if mmcData.categories.length == 0
+                    li.warning ❌ It is entered into no categories.
+            else
+                li.warning ❌ This world is #[strong NOT] entered into the MMC 2025, due to: !{mmcData.error}
 
     p See #[a(href='https://wiki.resonite.com/MMC_2025') our wiki] for more information on MMC.
