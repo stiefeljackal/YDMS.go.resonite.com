@@ -65,6 +65,10 @@ function matchCategories(tags) {
 }
 
 export function addMMC(worldRecord) {
+    if (worldRecord.ownerId === 'G-Creator-Jam') {
+      return worldRecord;
+    }
+
     if (!worldRecord.tags.includes(competitionTag)) {
         if (worldRecord.tags.includes(competitionTag.toUpperCase())) {
             worldRecord.mmc = {
