@@ -71,10 +71,8 @@ export function addMMC(worldRecord) {
                 entered: false,
                 error: "Invalid Competition Tag"
             }
-            return worldRecord;
-        } else {
-            return worldRecord;
         }
+        return worldRecord;
     }
 
     var categories = matchCategories(worldRecord.tags);
