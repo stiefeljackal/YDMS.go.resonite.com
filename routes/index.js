@@ -91,6 +91,10 @@ async function createResoniteApiError(res, type, id = "") {
  * @returns
  */
 async function handle(type, req, res, next, reqInit = undefined) {
+  if (type === "session" && 'force' in req.query && req.get('Sec-Fetch-User')) {
+    return res.redirect(`ressession:///${req.params.sessionId}`);
+  }
+
   try {
     var apiResponse = await fetch(getUrl(type, req), reqInit);
     if (!apiResponse.ok) {
