@@ -2,5 +2,7 @@ extends layout
 
 block content
   h1= error.status
-  h2= error.message 
-  pre #{error.stack}
+  p= error.message
+  if error.stack
+    h2 Stack Trace Info
+    pre #{error.stack}
