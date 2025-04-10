@@ -69,7 +69,7 @@ async function createResoniteApiError(res, type) {
     return createError(res.status, `We couldn't find this ${type}.\n
     Check your link is valid, and that the session is still open and publicly viewable.`);
   } else if (res.status === 403) {
-    return createError(res.status, "This world is not published, therefore not publicly viewable.");
+    return createError(res.status, "This world is not published; therefore, it is not publicly viewable.");
   }
 
   var text = await res.text();
