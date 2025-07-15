@@ -62,14 +62,18 @@ function getUrl(type, req) {
  *
  * @param {Response} res The response of the api request.
  * @param {HandleType} type The type of information this is whether it is a world or session.
+ * @param {string} [id=""] The world or session id.
  * @returns
  */
-async function createResoniteApiError(res, type) {
+async function createResoniteApiError(res, type, id = "") {
   if (res.status === 404) {
     return createError(res.status, `We couldn't find this ${type}.\n
-    Check your link is valid, and that the session is still open and publicly viewable.`);
+    Please check that your link is valid and the ${type} is still publicly viewable.`, {
+      handleType: type,
+      [`${type}Id`]: id
+    });
   } else if (res.status === 403) {
-    return createError(res.status, "This world is not published, therefore not publicly viewable.");
+    return createError(res.status, "This world is not published; therefore, it is not publicly viewable.");
   }
 
   var text = await res.text();
@@ -87,10 +91,15 @@ async function createResoniteApiError(res, type) {
  * @returns
  */
 async function handle(type, req, res, next, reqInit = undefined) {
+  if (type === "session" && 'force' in req.query && req.get('Sec-Fetch-User')) {
+    return res.redirect(`ressession:///${req.params.sessionId}`);
+  }
+
   try {
     var apiResponse = await fetch(getUrl(type, req), reqInit);
     if (!apiResponse.ok) {
-      var error = await createResoniteApiError(apiResponse, type);
+      const { sessionId, recordId } = req.params
+      var error = await createResoniteApiError(apiResponse, type, sessionId ?? recordId);
       return next(error);
     }
 
