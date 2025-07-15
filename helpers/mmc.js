@@ -65,16 +65,18 @@ function matchCategories(tags) {
 }
 
 export function addMMC(worldRecord) {
+    if (worldRecord.ownerId === 'G-Creator-Jam') {
+      return worldRecord;
+    }
+
     if (!worldRecord.tags.includes(competitionTag)) {
         if (worldRecord.tags.includes(competitionTag.toUpperCase())) {
             worldRecord.mmc = {
                 entered: false,
                 error: "Invalid Competition Tag"
             }
-            return worldRecord;
-        } else {
-            return worldRecord;
         }
+        return worldRecord;
     }
 
     var categories = matchCategories(worldRecord.tags);
