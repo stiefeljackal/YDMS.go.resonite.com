@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www.js",
-    "debug": "node --inspect-brk=9777 ./bin/www.js"
+    "debug": "node --inspect-brk=9777 ./bin/www.js",
+    "test": "vitest"
   },
   "exports": "./start.js",
   "dependencies": {
@@ -18,6 +19,7 @@
     "pug": "^3.0.3"
   },
   "devDependencies": {
-    "all-contributors-cli": "^6.26.1"
+    "all-contributors-cli": "^6.26.1",
+    "vitest": "3.2.4"
   }
 }
