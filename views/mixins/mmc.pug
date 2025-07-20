@@ -1,11 +1,11 @@
 mixin mmcMixin(mmcData)
     section.mmc
         h2
-            | MMC 2025 Information
+            | MMC #{mmcData.year} Information
             img(src='/images/CreatorJam.png')
         ul
             if (mmcData.entered)
-                li ✅ This world is entered into the MMC 2025!
+                li ✅ This world is entered into MMC #{mmcData.year}!
                 if isPublished
                     li ✅ This world is published!
                 else
@@ -20,6 +20,5 @@ mixin mmcMixin(mmcData)
                 if mmcData.categories.length == 0
                     li.warning ❌ It is entered into no categories.
             else
-                li.warning ❌ This world is #[strong NOT] entered into the MMC 2025, due to: !{mmcData.error}
-
-    p See #[a(href='https://wiki.resonite.com/MMC_2025') our wiki] for more information on MMC.
+                li.warning ❌ This world is #[strong NOT] entered into MMC #{mmcData.year}, due to: !{mmcData.error}
+        p See #[a(href=`https://wiki.resonite.com/${mmcData.wikiPath}`) our wiki] for more information on MMC #{mmcData.year}.
