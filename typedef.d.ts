@@ -122,3 +122,13 @@ type MmcCategory = {
   /** A unique key to help distinguish the category from others. */
   tagKey: string
 }
+
+/**
+ * The search result model when searching for a particular MMC configuration.
+ */
+type MmcConfigSearchResult = {
+  /** The MMC configuration found. */
+  mmcConfig: MmcConfig
+  /** `true` if the competition tag found in the world's tags is valid (i.e., the casing matches); otherwise, `false`. */
+  isValidCompetitionTag: boolean
+}

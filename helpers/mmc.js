@@ -1,90 +1,85 @@
-var competitionTag = "mmc25"; //TODO: handle years.
+import {
+  mmcCompetitionFullDataMap,
+  validCompetitionTags
+} from "../config/mmc/init.js"
 
-var categories = [
-  {
-    title: "World Social",
-    requiredTags: ["world", "social"]
-  },
-  {
-    title: "World Game",
-    requiredTags: ["world", "game"]
-  },
-  {
-    title: "World Misc",
-    requiredTags: ["world", "misc"]
-  },
-  // Avatars
-  {
-    title: "Avatars",
-    requiredTags: ["avatar", "avatars"]
-  },
-  {
-    title: "Avatar Miscellaneous",
-    requiredTags: ["avatar", "misc"]
-  },
-  // Other
-  {
-    title: "Other: Tools, Apps & Utilities",
-    requiredTags: ["other", "tau"]
-  },
-  {
-    title: "Other: Miscellaneous",
-    requiredTags: ["other", "misc"]
-  },
-  // Single tag categories
-  {
-    title: "Art",
-    requiredTags: ["art"]
-  },
-  {
-    title: "Education, Science and Data Visualization",
-    requiredTags: ["esd"]
-  },
-  {
-    title: "Meme",
-    requiredTags: ["meme"]
-  },
-  {
-    title: "Narrative",
-    requiredTags: ["narrative"]
-  }
-]
+/**
+ * Finds the MMC config for the MMC event that the world falls under.
+ * 
+ * @param {Iterable<string>} tags The tags for the world.
+ * @param {Date} entryDate The date of the world entry. This is usually the publish date if present; otherwise, the creation date is used.
+ * @return {MmcConfigSearchResult} The result info of the search.
+ */
+function findMmcConfig(tags, entryDate) {
+  let isValidCompetitionTag = null;
+  let mmcConfig = null;
 
-function matchCategories(tags) {
-  var cats = [];
-  for(const category of categories) {
-    var entered = category.requiredTags.every(tag => tags.includes(tag));
+  for (const worldTag of tags) {
+    const normalizedTag = worldTag.toLowerCase();
+    const config = mmcCompetitionFullDataMap.get(normalizedTag);
 
-    if (!entered)
+    if (config == null || config.startDate > entryDate || config.endDate < entryDate) {
       continue;
+    }
 
-    cats.push(category);
+    isValidCompetitionTag = validCompetitionTags.has(worldTag);
+    mmcConfig = config;
   }
 
-  return cats;
+  return {
+    mmcConfig,
+    isValidCompetitionTag
+  }
 }
 
+/**
+ * Returns matched categories based on the given tags.
+ * 
+ * @param {Set<string>} worldTags The world tags to use when matching categories.
+ * @param {MmcCategory[]} categories The list of categories to use when searching for matching categories.
+ * @yields {[string, MmcCategory]} The key value pair of the category.
+ */
+function* matchCategories(worldTags, categories) {
+  for (const category of categories) {
+    let currentCategory = category
+    while (currentCategory != null && worldTags.has(currentCategory.requiredTags.at(-1))) {
+      if (currentCategory.parent == null) {
+        yield [category.tagKey, category]
+      }
+      currentCategory = currentCategory.parent
+    }
+  }
+}
+
+/**
+ * Check the world record and add necessary MMC information to it.
+ * 
+ * @param {WorldInfo} worldRecord The world record to possibly add MMC info to.
+ * @returns {WorldInfo} The mutated world record that was passed in.
+ */
 export function addMMC(worldRecord) {
-    if (worldRecord.ownerId === 'G-Creator-Jam') {
-      return worldRecord;
-    }
-
-    if (!worldRecord.tags.includes(competitionTag)) {
-        if (worldRecord.tags.includes(competitionTag.toUpperCase())) {
-            worldRecord.mmc = {
-                entered: false,
-                error: "Invalid Competition Tag"
-            }
-        }
-        return worldRecord;
-    }
-
-    var categories = matchCategories(worldRecord.tags);
-
-    worldRecord.mmc = {
-        entered:true,
-        categories
-    }
-
+  if (worldRecord.ownerId === 'G-Creator-Jam') {
     return worldRecord;
+  }
+
+  const { firstPublishTime, creationTime } = worldRecord;
+  const tags = new Set(worldRecord.tags);
+  const { mmcConfig, isValidCompetitionTag } = findMmcConfig(tags, new Date(firstPublishTime ?? creationTime))
+
+  if (mmcConfig == null) {
+    return worldRecord;
+  }
+
+  return Object.assign(worldRecord, {
+    mmc: {
+      year: mmcConfig.year,
+      wikiPath: mmcConfig.wikiPath,
+      entered: isValidCompetitionTag,
+      categories: isValidCompetitionTag
+        // Need to handle MMC 2020 categories this way due to the dual casings for categories (e.g., "world and World", "avatar and Avatar", and "other and Other")
+        ? new Map(matchCategories(tags, mmcConfig.categories)).values().toArray()
+        : null,
+      error: isValidCompetitionTag ? null : "Invalid Competition Tag"
+    }
+  })
 }
