@@ -1,0 +1,24 @@
+{
+  "year": 2021,
+  "competitionTag": "mmc21",
+  "startDate": "2021-09-01T18:00:00.000Z",
+  "endDate": "2021-10-16T18:00:00.000Z",
+  "wikiPath": "MMC_2021",
+  "categories": {
+    "world": {
+      "social": "World: Social",
+      "game": "World: Game",
+      "misc": "World: Misc"
+    },
+    "avatar": {
+      "avatars": "Avatar: Avatars",
+      "accessories": "Avatar: Accessories",
+      "misc": "Avatar: Miscellaneous"
+    },
+    "other": {
+      "tau": "Other: TAU",
+      "misc": "Other: Misc"
+    },
+    "meme": "Meme"
+  }
+}

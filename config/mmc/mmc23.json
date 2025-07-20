@@ -1,0 +1,26 @@
+{
+  "year": 2023,
+  "competitionTag": "mmc23",
+  "startDate": "2023-02-01T19:00:00.000Z",
+  "endDate": "2023-03-18T19:00:00.000Z",
+  "wikiPath": "MMC_2023",
+  "categories": {
+    "world": {
+      "social": "World: Social",
+      "game": "World: Game",
+      "misc": "World: Misc"
+    },
+    "avatar": {
+      "avatars": "Avatar: Avatars",
+      "accessories": "Avatar: Accessories",
+      "misc": "Avatar: Miscellaneous"
+    },
+    "other": {
+      "tau": "Other: TAU",
+      "misc": "Other: Misc"
+    },
+    "art": "Art",
+    "esd": "Education/Science/Dataviz (ESD)",
+    "meme": "Meme"
+  }
+}

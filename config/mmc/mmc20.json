@@ -1,0 +1,16 @@
+{
+  "year": 2020,
+  "competitionTag": "mmc",
+  "competitionOtherTag": "MMC",
+  "startDate": "2020-09-01T18:00:00.000Z",
+  "endDate": "2020-10-10T18:00:00.000Z",
+  "wikiPath": "MMC_2020",
+  "categories": {
+    "world": "World",
+    "avatar": "Avatars",
+    "other": "Gadget/Tools+",
+    "World": "World",
+    "Avatar": "Avatar",
+    "Other": "Gadget/Tools+"
+  }
+}
