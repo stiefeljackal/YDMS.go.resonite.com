@@ -11,14 +11,14 @@ mixin mmcMixin(mmcData)
                 else
                     li.warning ❌ This world is #[strong NOT] published!
                 if mmcData.categories.length > 0
-                li It is entered into the following Categories:
-                    ul
-                        each category in mmcData.categories
-                            li ✅ !{category.title}
+                    li It is entered into the following Categories:
+                        ul
+                            each category in mmcData.categories
+                                li ✅ !{category.title}
                 if mmcData.categories.length > 1
                     li.warning ❌ It is entered into more than one category.
                 if mmcData.categories.length == 0
-                    li.warning ❌ It is entered into no categories.
+                    li.warning ❌ It is #[strong NOT] entered into any categories.
             else
                 li.warning ❌ This world is #[strong NOT] entered into MMC #{mmcData.year}, due to: !{mmcData.error}
         p See #[a(href=`https://wiki.resonite.com/${mmcData.wikiPath}`) our wiki] for more information on MMC #{mmcData.year}.
