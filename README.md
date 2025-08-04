@@ -33,6 +33,7 @@ Please make an issue, before making a PR.
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/stiefeljackal"><img src="https://avatars.githubusercontent.com/u/20023996?v=4?s=100" width="100px;" alt="Stiefel Jackal"/><br /><sub><b>Stiefel Jackal</b></sub></a><br /><a href="https://github.com/Yellow-Dog-Man/go.resonite.com/commits?author=stiefeljackal" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://j4.lc/"><img src="https://avatars.githubusercontent.com/u/76598503?v=4?s=100" width="100px;" alt="Jae Lo Presti"/><br /><sub><b>Jae Lo Presti</b></sub></a><br /><a href="https://github.com/Yellow-Dog-Man/go.resonite.com/commits?author=jae1911" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://bredo.tech"><img src="https://avatars.githubusercontent.com/u/29470709?v=4?s=100" width="100px;" alt="bredo"/><br /><sub><b>bredo</b></sub></a><br /><a href="https://github.com/Yellow-Dog-Man/go.resonite.com/commits?author=bredo228" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://badhalo.ninja"><img src="https://avatars.githubusercontent.com/u/1661241?v=4?s=100" width="100px;" alt="badhaloninja"/><br /><sub><b>badhaloninja</b></sub></a><br /><a href="https://github.com/Yellow-Dog-Man/go.resonite.com/commits?author=badhaloninja" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
