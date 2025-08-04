@@ -210,3 +210,7 @@ footer {
 .select-all {
   user-select: all;
 }
+.footer-links a {
+  margin-left: 0.4em;
+  margin-right: 0.4em;
+}
