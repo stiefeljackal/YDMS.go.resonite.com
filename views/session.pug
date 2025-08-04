@@ -10,7 +10,7 @@ block content
     h1 !{name}
 
     .center 
-        img(src=thumbnailUrl alt=`A preview image of the '${title}' session.`)
+        img(src=thumbnailUrl alt=`A preview image of the '${title}' session.` onerror=`this.onerror=null; this.src='${noThumbnailUrl}';`)
 
     dl.infobox
         .row

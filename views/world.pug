@@ -13,7 +13,7 @@ block content
     h1 !{name}
 
     .center 
-        img(src=thumbnailUri alt=`A preview image of the '${title}' world.`)
+        img(src=thumbnailUri alt=`A preview image of the '${title}' world.` onerror=`this.onerror=null; this.src='${noThumbnailUrl}';`)
 
     dl.infobox
         .row
