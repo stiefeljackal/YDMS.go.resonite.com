@@ -74,7 +74,6 @@ function preProcessWorld(json) {
   } else {
     json.thumbnailUri = NO_THUMBNAIL_URL;
   }
-  json.thumbnailUrl = json.thumbnailUri;
 
   json.isFeatured = !!json.submissions?.[0]?.featured;
   // Convert to UTC to have a standard timezone
@@ -104,6 +103,18 @@ function preProcessWorldList(json) {
 }
 
 /**
+ * Adds meta-data suitable for any response.
+ * @param {BaseWorldSessionInfo} json
+ * @return {WorldSearchResult} The same preprocessed world passed in.
+ * TODO: pug/express probably has a better way to handle this
+ */
+function addMetadata(json) {
+  json.noThumbnailUrl = NO_THUMBNAIL_URL;
+
+  return json;
+}
+
+/**
  * Preprocesses the world or session information returned from SkyFrost
  * to make it suitable for Web viewing.
  *
@@ -113,14 +124,16 @@ function preProcessWorldList(json) {
  */
 export function preProcess(json, type) {
 
-    if (type !== "sessionList" && json.name){
-        json.title = DOMPurify.sanitize(json.name, {
-          ALLOWED_TAGS: []
-        }); // No tags in title
+  if (type !== "sessionList" && json.name) {
+    json.title = DOMPurify.sanitize(json.name, {
+      ALLOWED_TAGS: []
+    }); // No tags in title
 
-        // Handle name for inclusion in the actual page.
-        json.name = preProcessName(json.name);
-    }
+    // Handle name for inclusion in the actual page.
+    json.name = preProcessName(json.name);
+  }
+
+  json = addMetadata(json);
 
   switch (type) {
     case "session":

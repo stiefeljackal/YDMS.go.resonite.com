@@ -28,7 +28,7 @@ block content
             p.listing-item__author
               em By #{world.ownerName}
             div.thumbnail
-              img(src=`${world.thumbnailUri}`, alt='', width='280', height='140', loading='lazy')
+              img(src=`${world.thumbnailUri}`, alt='', width='280', height='140', loading='lazy' onerror=`this.onerror=null; this.src='${noThumbnailUrl}';`)
             p.listing-item__description !{world.description || '(No Description)'}
     +pagination(urlPath, apiInitBody.offset + 1, apiInitBody.offset + records.length, [query.pageIndex, parseInt(query.pageIndex) + 1])
   else
