@@ -9,15 +9,15 @@
   },
   "exports": "./start.js",
   "dependencies": {
-    "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "express": "~4.21.2",
+    "cookie-parser": "~1.4.7",
+    "debug": "~4.4.1",
+    "express": "~5.1.0",
     "gl-matrix": "3.4.3",
     "http-errors": "~2.0.0",
-    "isomorphic-dompurify": "^2.16.0",
-    "morgan": "~1.10.0",
+    "isomorphic-dompurify": "^2.26.0",
+    "morgan": "~1.10.1",
     "pug": "^3.0.3",
-    "sharp": "0.33.5"
+    "sharp": "0.34.3"
   },
   "devDependencies": {
     "all-contributors-cli": "^6.26.1",
