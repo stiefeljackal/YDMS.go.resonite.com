@@ -58,6 +58,10 @@ body {
   justify-content: center;
 }
 
+header.center {
+  flex-direction: column;
+}
+
 * {
   font-family: "Poppins", sans-serif;
 }
