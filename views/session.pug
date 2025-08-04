@@ -29,8 +29,10 @@ block content
 
     h2.subheading Alternative URLs 
     ul
-        li #[strong Session Url:] #{`ressession:///${sessionId}`}
+        li #[strong Session Url:] 
+            span.select-all #{`ressession:///${sessionId}`}
         li #[strong Connection Urls:] 
             ul
                 each url in sessionURLs 
-                    li= url
+                    li
+                        span.select-all=url

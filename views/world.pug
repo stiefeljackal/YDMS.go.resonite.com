@@ -48,6 +48,7 @@ block content
         a(href="https://wiki.resonite.com/go.resonite.com") Need Help?
     h2.subheading Alternative URLs 
     ul
-        li #[strong Record Url:] #{`resrec:///${ownerId}/${id}`}
+        li #[strong Record Url:] 
+            span.select-all #{`resrec:///${ownerId}/${id}`}
     if mmc
         +mmcMixin(mmc)
