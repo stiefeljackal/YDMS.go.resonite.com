@@ -58,6 +58,10 @@ body {
   justify-content: center;
 }
 
+header.center {
+  flex-direction: column;
+}
+
 * {
   font-family: "Poppins", sans-serif;
 }
@@ -209,4 +213,8 @@ footer {
 /* https://developer.mozilla.org/en-US/docs/Web/CSS/user-select */
 .select-all {
   user-select: all;
+}
+.footer-links a {
+  margin-left: 0.4em;
+  margin-right: 0.4em;
 }
