@@ -205,3 +205,8 @@ footer {
   color: var(--color-hero-red);
   font-weight: bold;
 }
+
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/user-select */
+.select-all {
+  user-select: all;
+}
