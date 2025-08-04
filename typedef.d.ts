@@ -87,3 +87,48 @@ type SessionInfo = BaseWorldSessionInfo | {
   /** The thumbnail image of the session as a URL. */
   thumbnailUrl: string
 }
+
+/**
+ * Configuration data used to examine a world and determine if it is an MMC entry.
+ */
+type MmcConfig = {
+  /** The year that the MMC event was hosted in. */
+  year: number
+  /** The identifying competition tag for the MMC event. */
+  competitionTag: string
+  /** An additional identifying competition tag for the MMC event. */
+  competitionOtherTag?: string
+  /** The official start date of the competition. This is usually the kickoff date. */
+  startDate: Date
+  /** The official end date of the competition. This is usually the awards ceremony date. */
+  endDate: Date
+  /** The relative URL path of the Wiki page for the MMC event. */
+  wikiPath: string
+  /** The list of categories that an entry can be tagged with. */
+  categories: MmcCategory[]
+}
+
+/**
+ * MMC category data that contains either a friendly name of the category or
+ * a map of additional `MmcCategory` objects (i.e., subcategories).
+ */
+type MmcCategory = {
+  /** The friendly name of the category. */
+  title: string
+  /** The parent category of this category. If `null`, then this  */
+  parent: MmcCategory
+  /** The tags that are required for the category.*/
+  requiredTags: string[]
+  /** A unique key to help distinguish the category from others. */
+  tagKey: string
+}
+
+/**
+ * The search result model when searching for a particular MMC configuration.
+ */
+type MmcConfigSearchResult = {
+  /** The MMC configuration found. */
+  mmcConfig: MmcConfig
+  /** `true` if the competition tag found in the world's tags is valid (i.e., the casing matches); otherwise, `false`. */
+  isValidCompetitionTag: boolean
+}

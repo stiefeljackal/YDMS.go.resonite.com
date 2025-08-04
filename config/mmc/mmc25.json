@@ -1,0 +1,26 @@
+{
+  "year": 2025,
+  "competitionTag": "mmc25",
+  "startDate": "2025-02-01T19:00:00.000Z",
+  "endDate": "2025-03-22T19:00:00.000Z",
+  "wikiPath": "MMC_2025",
+  "categories": {
+    "world": {
+      "social": "World: Social",
+      "game": "World: Game",
+      "misc": "World: Misc"
+    },
+    "avatar": {
+      "avatars": "Avatar: Avatars",
+      "misc": "Avatar: Miscellaneous"
+    },
+    "other": {
+      "tau": "Other: TAU",
+      "misc": "Other: Misc"
+    },
+    "art": "Art",
+    "esd": "Education/Science/Dataviz (ESD)",
+    "meme": "Meme",
+    "narrative": "Narrative"
+  }
+}
