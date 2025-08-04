@@ -88,8 +88,14 @@ function onError(error) {
  */
 function onListening() {
   var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
+  var bind;
+  if (typeof addr === 'string') {
+    bind = 'pipe ' + addr;
+  } else {
+    bind = 'port ' + addr.port;
+    // Makes it super easy to ctrl + click the url, probably should turn off in prod
+    console.log("http://127.0.1:" + addr.port);
+  }
   debug('Listening on ' + bind);
+  
 }
