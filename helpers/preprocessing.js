@@ -74,6 +74,9 @@ function preProcessWorld(json) {
   } else {
     json.thumbnailUri = NO_THUMBNAIL_URL;
   }
+  // Handle thumbnailUri and thumbnailUrl quirk by also assigning thumbnailUrl for worlds.
+  json.thumbnailUrl = json.thumbnailUri;
+  // TODO: there should be a standardized variable name for thumbnail urls.
 
   json.isFeatured = !!json.submissions?.[0]?.featured;
   // Convert to UTC to have a standard timezone
