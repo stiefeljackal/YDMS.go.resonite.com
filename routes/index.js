@@ -149,6 +149,9 @@ function addMetadata(pageType, json, req, reqInit = undefined) {
     ogThumbnailUrl.pathname = NO_THUMBNAIL_URL;
   }
 
+  const jsonUrl = new URL(urlPath);
+  jsonUrl.pathname += '/json';
+
   return Object.assign(json, {
     bodyClass: pageType,
     pageType,
@@ -156,6 +159,7 @@ function addMetadata(pageType, json, req, reqInit = undefined) {
     params: req.params,
     urlPath,
     ogThumbnailUrl,
+    jsonUrl,
     apiInitBody: JSON.parse(reqInit?.body ?? null)
   });
 }
