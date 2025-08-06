@@ -6,6 +6,16 @@ function sanitizeHTML(input) {
 }
 
 /**
+ * Removes all tags from the given text
+ *
+ * @param {string} input The text to strip tags from.
+ * @returns The processed text that was sanitized.
+ */
+function stripTags(input) {
+    return DOMPurify.sanitize(input, {ALLOWED_TAGS: []});
+}
+
+/**
  * Converts the world or session name to its HTML equivalent.
  *
  * @param {string} name The name of the world or session to sanitize.
@@ -66,6 +76,9 @@ function preProcessSessionList(json, count){
  */
 function preProcessWorld(json) {
   if (json.description) {
+    // Sanitize the Open Graph meta description from tags
+    json.ogDescription = stripTags(json.description);
+    
     json.description = preProcessName(json.description);
   }
 
@@ -125,9 +138,7 @@ function addMetadata(json) {
 export function preProcess(json, type) {
 
   if (type !== "sessionList" && json.name) {
-    json.title = DOMPurify.sanitize(json.name, {
-      ALLOWED_TAGS: []
-    }); // No tags in title
+    json.title = stripTags(json.name); // No tags in title
 
     // Handle name for inclusion in the actual page.
     json.name = preProcessName(json.name);
