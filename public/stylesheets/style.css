@@ -21,6 +21,7 @@ html, body {
   display: flex;
   height: 100vh;
   margin: 0;
+  cursor: url("/images/cursors/SVG/Color_Cursor.svg") 8 8, default;
 }
 
 html {
@@ -33,6 +34,10 @@ body {
   box-sizing: border-box;
   max-width: 820px;
   padding: 20px 10px;
+}
+
+a:hover{
+  cursor: url("/images/cursors/SVG/Color_InteractCursor.svg") 8 8, pointer;
 }
 
 :is(h1, h2, h3, h4, h5, h6) svg {
@@ -218,3 +223,4 @@ footer {
   margin-left: 0.4em;
   margin-right: 0.4em;
 }
+
