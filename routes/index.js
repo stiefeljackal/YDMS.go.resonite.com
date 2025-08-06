@@ -140,14 +140,26 @@ async function handle(type, req, res, next, reqInit = undefined) {
  * @return BaseWorldSessionInfo
  */
 function addMetadata(pageType, json, req, reqInit = undefined) {
-  const urlPath = req.getUrl();
+  const urlPath = new URL(req.getUrl());
+
+  const ogThumbnailUrl = new URL(urlPath);
+  if (json.thumbnailUrl !== NO_THUMBNAIL_URL) {
+    ogThumbnailUrl.pathname += '/thumbnail';
+  } else {
+    ogThumbnailUrl.pathname = NO_THUMBNAIL_URL;
+  }
+
+  const jsonUrl = new URL(urlPath);
+  jsonUrl.pathname += '/json';
+
   return Object.assign(json, {
     bodyClass: pageType,
     pageType,
     query: req.query,
     params: req.params,
     urlPath,
-    ogThumbnailUrl: json.thumbnailUrl !== NO_THUMBNAIL_URL ? `${urlPath}/thumbnail` : NO_THUMBNAIL_URL,
+    ogThumbnailUrl,
+    jsonUrl,
     apiInitBody: JSON.parse(reqInit?.body ?? null)
   });
 }

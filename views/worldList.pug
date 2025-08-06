@@ -5,7 +5,7 @@ include mixins/pagination.pug
 
 block head
   meta(property="og:description" content="Published worlds on Resonite")
-  link(type="application/json+oembed" href=`${urlPath}json`)
+  link(type="application/json+oembed" href=jsonUrl)
   link(rel='stylesheet' href='/stylesheets/worldList.css')
   link(rel='stylesheet' href='/stylesheets/searchbox.css')
   link(rel='stylesheet' href='/stylesheets/pagination.css')
