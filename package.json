@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www.js",
-    "debug": "nodemon --inspect=9777 ./bin/www.js"
+    "debug": "nodemon --inspect=9777 ./bin/www.js",
+    "test": "vitest"
   },
   "exports": "./start.js",
   "dependencies": {
@@ -21,6 +22,7 @@
   },
   "devDependencies": {
     "all-contributors-cli": "^6.26.1",
+    "vitest": "3.2.4",
     "nodemon": "^3.1.10"
   }
 }
