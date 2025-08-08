@@ -17,7 +17,7 @@
   --btn--icon-only-size: 36px;
   --cursor-default: url("/images/cursors/default_cursor.svg") 8 8, default;
   --cursor-pointer: url("/images/cursors/interact_cursor.svg") 8 8, pointer;
-  --cursor-text: url("/images/cursors/typing_cursor.svg") 8 8, text;
+  --cursor-text: url("/images/cursors/typing_cursor.svg") 10 10, text;
 }
 
 html, body {
