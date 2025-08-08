@@ -15,17 +15,20 @@
   --background-body: #11151d;
   --border-radius: 8px;
   --btn--icon-only-size: 36px;
+  --cursor-default: url("/images/cursors/default_cursor.svg") 8 8, default;
+  --cursor-pointer: url("/images/cursors/interact_cursor.svg") 8 8, pointer;
+  --cursor-text: url("/images/cursors/typing_cursor.svg") 8 8, text;
 }
 
 html, body {
   display: flex;
   height: 100vh;
   margin: 0;
-  cursor: url("/images/cursors/SVG/Color_Cursor.svg") 8 8, default;
 }
 
 html {
   justify-content: center;
+  cursor: var(--cursor-default)
 }
 
 body {
@@ -37,7 +40,7 @@ body {
 }
 
 a {
-  cursor: url("/images/cursors/SVG/Color_InteractCursor.svg") 8 8, pointer;
+  cursor: var(--cursor-pointer)
 }
 
 :is(h1, h2, h3, h4, h5, h6) svg {
