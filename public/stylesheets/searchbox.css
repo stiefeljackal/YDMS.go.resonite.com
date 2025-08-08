@@ -7,7 +7,6 @@
   align-items: center;
   position: relative;
   margin: 16px 0 24px;
-  cursor: var(--cursor-text);
 }
 
 .search__textinput {

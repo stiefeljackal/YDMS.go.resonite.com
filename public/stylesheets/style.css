@@ -82,6 +82,10 @@ footer {
   width: 100%;
 }
 
+input[type=text] {
+  cursor: var(--cursor-text);
+}
+
 .btn {
   box-sizing: border-box;
   appearance: button;
