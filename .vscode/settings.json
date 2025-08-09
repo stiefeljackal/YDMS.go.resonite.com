@@ -5,5 +5,9 @@
     "javascript",
     "pug"
   ],
-  "eslint.lintTask.enable": true
+  "eslint.format.enable": false,
+  "eslint.lintTask.enable": true,
+  "[json]": {
+    "editor.formatOnSave": false
+  }
 }
