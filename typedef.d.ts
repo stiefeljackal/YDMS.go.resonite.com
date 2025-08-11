@@ -53,7 +53,13 @@ type BaseWorldSessionInfo = {
   name: string;
   /** The description of the world or session. */
   description: string;
-};
+  /** The url of the world or session for go.resonite.com. */
+  goUri: string;
+  /** The url of the equirectangular (360) image for the world or session on go.resonite.com */
+  go360ImageUrl: string;
+  /** The url of the thumbnail image for the world or session on go.resonite.com */
+  goThumbnailUrl: string;
+}
 
 /**
  * The world information returned by the Resonite API.
