@@ -194,11 +194,7 @@ function addMetadata(pageType, json, req, reqInit = undefined) {
   const urlPath = new URL(req.getUrl());
 
   const ogThumbnailUrl = new URL(urlPath);
-  if (json.thumbnailUrl !== NO_THUMBNAIL_URL) {
-    ogThumbnailUrl.pathname += "/thumbnail";
-  } else {
-    ogThumbnailUrl.pathname = NO_THUMBNAIL_URL;
-  }
+  ogThumbnailUrl.pathname = json.goThumbnailUrl;
 
   const jsonUrl = new URL(urlPath);
   jsonUrl.pathname += "/json";
