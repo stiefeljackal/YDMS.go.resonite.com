@@ -273,9 +273,10 @@ async function handleThumbnail(type, req, res, next) {
       return;
     }
 
-    const { imagePipe } = imageFetchResponse;
+    const { imagePipe, eTag } = imageFetchResponse;
 
     res.set("Content-Type", "image/webp");
+    res.set("eTag", eTag);
     res.status(200).send(await getFovShotFromEquirectangularImage(imagePipe));
   } catch (error) {
     return handleThrownError(error, next);
