@@ -32,7 +32,9 @@ router.get(`/session/:sessionId/thumbnail`, (req, res, next) =>
 router.get("/session/:sessionId/json", (req, res, next) =>
   handleJson("session", req, res, next),
 );
-
+router.get("/session/:sessionId/360-image", (req, res, next) =>
+  handle360Image("session", req, res, next),
+);
 router.get("/sessions", (req, res, next) =>
   handle("sessionList", req, res, next),
 );
@@ -69,6 +71,9 @@ for (const word of ["world", "record"]) {
   );
   router.get(`/${word}/:ownerId/:recordId/json`, (req, res, next) =>
     handleJson("world", req, res, next),
+  );
+  router.get(`/${word}/:ownerId/:recordId/360-image`, (req, res, next) =>
+    handle360Image("world", req, res, next),
   );
 }
 
@@ -272,6 +277,33 @@ async function handleThumbnail(type, req, res, next) {
 
     res.set("Content-Type", "image/webp");
     res.status(200).send(await getFovShotFromEquirectangularImage(imagePipe));
+  } catch (error) {
+    return handleThrownError(error, next);
+  }
+}
+
+/**
+ * Handles the 360 image used of the world or session.
+ *
+ * @param {HandleType} type The type of information this is whether it is a world or session.
+ * @param {import('express').Request} req The web request information.
+ * @param {import('express').Response} res The web response object.
+ * @param {import('express').NextFunction} next The function to call to proceed to the next handler.
+ * @returns A 360 image of the world or session.
+ */
+async function handle360Image(type, req, res, next) {
+  try {
+    const imageFetchResponse = await handleImage(type, req, res, next);
+
+    if (imageFetchResponse == null) {
+      return;
+    }
+
+    const { imagePipe, contentType, eTag, httpStatusCode } = imageFetchResponse;
+
+    res.set("Content-Type", contentType);
+    res.set("eTag", eTag);
+    res.status(httpStatusCode).send(await imagePipe?.webp().toBuffer());
   } catch (error) {
     return handleThrownError(error, next);
   }
