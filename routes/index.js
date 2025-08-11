@@ -6,7 +6,10 @@ import { addMMC } from "../helpers/mmc.js";
 
 import fs from "node:fs";
 import { createSearchRequestInit } from "../helpers/search.js";
-import { getFovShotFromEquirectangularImage } from "../helpers/360-image-processing.js";
+import {
+  getFovShotFromEquirectangularImage,
+  fetchImage,
+} from "../helpers/360-image-processing.js";
 import { NO_THUMBNAIL_URL } from "../helpers/constants.js";
 
 var router = express.Router();
@@ -263,26 +266,76 @@ async function handleJson(type, req, res, next, reqInit = undefined) {
  */
 async function handleThumbnail(type, req, res, next) {
   try {
-    // The following six lines and the try/catch are utilized commonly when handling routes that require data from
-    // api.resonite.com. This is a good candidate for middleware for a router that needs to fetch this info.
-    var apiResponse = await fetch(getUrl(type, req));
-    if (!apiResponse.ok) {
-      var error = await createResoniteApiError(apiResponse, type);
-      return next(error);
-    }
-    var json = preProcess(await apiResponse.json(), type);
+    const imageFetchResponse = await handleImage(type, req, res, next);
 
-    if (json.thumbnailUrl === NO_THUMBNAIL_URL) {
-      return res.redirect(NO_THUMBNAIL_URL);
+    if (imageFetchResponse == null) {
+      return;
     }
+
+    const { imagePipe } = imageFetchResponse;
 
     res.set("Content-Type", "image/webp");
-    res
-      .status(200)
-      .send(await getFovShotFromEquirectangularImage(json.thumbnailUrl));
+    res.status(200).send(await getFovShotFromEquirectangularImage(imagePipe));
   } catch (error) {
     return handleThrownError(error, next);
   }
+}
+
+/**
+ * Handles images associated with a world or session. These are usually the thumbnail or
+ * equirectangular images.
+ *
+ * @param {HandleType} type The type of information this is whether it is a world or session.
+ * @param {import('express').Request} req The web request information.
+ * @param {import('express').Response} res The web response object.
+ * @param {import('express').NextFunction} next The function to call to proceed to the next handler.
+ * @returns {Promise<FetchImageResponse>} The response of the image fetch.
+ */
+async function handleImage(type, req, res, next) {
+  const json = await fetchResoniteData(type, req, next);
+
+  if (json == null) {
+    return;
+  }
+
+  preProcess(json, type);
+
+  if (json.thumbnailUrl == NO_THUMBNAIL_URL) {
+    return res.redirect(NO_THUMBNAIL_URL);
+  }
+
+  const eTagFromRequest = req.get("If-None-Match");
+  const imageFetchResponse = await fetchImage(
+    json.thumbnailUrl,
+    eTagFromRequest,
+  );
+
+  if (!imageFetchResponse.isOk) {
+    return res.redirect(NO_THUMBNAIL_URL);
+  } else if (!imageFetchResponse.isNewerImage) {
+    res.status(304).end();
+    return;
+  }
+
+  return imageFetchResponse;
+}
+
+/**
+ *
+ * @param {HandleType} type The type of information this is whether it is a world or session.
+ * @param {import('express').Request} req The web request information.
+ * @returns The API response from Resonite's Cloud.
+ */
+async function fetchResoniteData(type, req, next) {
+  // The following seven lines are utilized commonly when handling routes that require data from
+  // api.resonite.com. This is a good candidate for middleware for a router that needs to fetch this info.
+  var apiResponse = await fetch(getUrl(type, req));
+  if (!apiResponse.ok) {
+    var error = await createResoniteApiError(apiResponse, type);
+    return next(error);
+  }
+  const responseJson = await apiResponse.json();
+  return responseJson;
 }
 
 /**
