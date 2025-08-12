@@ -8,17 +8,20 @@ const _viewerElementArrowKeyPressedMap = new WeakMap();
 const _viewerElementTimerMap = new WeakMap();
 
 const viewerContainers = Array.from(
-  document.querySelectorAll(".panorama-viewer__canvas"),
+  document.querySelectorAll(".panorama-viewer"),
 );
-for (const container of viewerContainers) {
-  const { panorama } = container.dataset;
+for (const viwerContainer of viewerContainers) {
+  const canvasContainer = viwerContainer.querySelector(
+    ".panorama-viewer__canvas",
+  );
+  const { panorama } = viwerContainer.dataset;
 
   if (!panorama) {
     continue;
   }
 
   const viewer = new Viewer({
-    container,
+    container: canvasContainer,
     panorama,
     navbar: null,
     mousewheel: false,
@@ -60,7 +63,7 @@ function onViewerReady(e) {
   // Add required accessibility attributes.
   const canvas = canvasViewer.querySelector("canvas");
   canvas.role = "img";
-  canvas.ariaLabel = canvasViewer.dataset.imageAlt;
+  canvas.ariaLabel = canvasViewer.parentElement.dataset.imageAlt;
 }
 
 /**
