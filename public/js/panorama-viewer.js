@@ -1,6 +1,7 @@
 import { Viewer } from "@photo-sphere-viewer/core";
 
 const DEFAULT_ZOOM_LEVEL = 55;
+const DEFAULT_FISHEYE = 0.15;
 const KEYPRESS_MOVEMENT_INCREMENT = 0.0125;
 const KEYPRESS_MOVEMENT_INTERVAL_TIME = 7.5;
 
@@ -23,6 +24,7 @@ for (const viwerContainer of viewerContainers) {
   const viewer = new Viewer({
     container: canvasContainer,
     panorama,
+    fisheye: DEFAULT_FISHEYE,
     navbar: null,
     mousewheel: false,
     keyboard: "always",

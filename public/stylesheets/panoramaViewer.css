@@ -8,6 +8,7 @@
 }
 
 .panorama-viewer {
+  display: flex;
   position: relative;
   width: var(--panorama-viewer-default-width);
   height: var(--panorama-viewer-default-height);
