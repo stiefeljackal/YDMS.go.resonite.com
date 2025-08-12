@@ -131,4 +131,6 @@ type MmcConfigSearchResult = {
   mmcConfig: MmcConfig
   /** `true` if the competition tag found in the world's tags is valid (i.e., the casing matches); otherwise, `false`. */
   isValidCompetitionTag: boolean
+  /** `true` if the competition is currently active; otherwise, `false` */
+  isCompetitionActive
 }
