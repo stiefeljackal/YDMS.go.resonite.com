@@ -229,3 +229,22 @@ footer {
   margin-right: 0.4em;
 }
 
+.badge {
+  padding: 4px 8px;
+  margin: 0px 5px 10px;
+  
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 4px;
+
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+.badge a {
+  color: unset;
+}
+.badge-yellow {
+  background-color: var(--color-sub-yellow);
+  color: var(--color-hero-yellow);
+}
