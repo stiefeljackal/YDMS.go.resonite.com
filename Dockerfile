@@ -1,5 +1,5 @@
 # Base image
-FROM node:23-alpine
+FROM node:23
 
 # Setting work directory
 WORKDIR /usr/src/app
