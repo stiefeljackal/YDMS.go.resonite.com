@@ -6,9 +6,10 @@ const MAX_RESULT_COUNT = 20;
  *
  * @param {string} searchStr The string used to search for worlds.
  * @param {number} pageIndex The normalized offset that will be multiplied by the count.
+ * @param {boolean} onlyFeatured `true` if only featured worlds should be returned from the results; otherwise, `false`.
  * @return {RecordApiSearchParameters} The search parameters that can be used to search for particular worlds.
  */
-function createWorldSerachParams(searchStr, pageIndex) {
+function createWorldSerachParams(searchStr, pageIndex, onlyFeatured) {
   const searchTerms = searchStr.trim()
     .split(/\s+/)
     .filter(term => !!term)
@@ -36,12 +37,13 @@ function createWorldSerachParams(searchStr, pageIndex) {
     count: MAX_RESULT_COUNT,
     offset: MAX_RESULT_COUNT * pageIndex,
     private: false,
+    onlyFeatured,
     sortBy: 'FirstPublishTime',
     sortDirection: 'Descending',
     submittedTo: 'G-Resonite',
     optionalTags,
     requiredTags,
-    excludedTags
+    excludedTags,
   };
 }
 
@@ -52,14 +54,14 @@ function createWorldSerachParams(searchStr, pageIndex) {
  * @param {WorldSearchRequestParameters} params The additional search parameters specificed by the user.
  * @return {RequestInit} The request message that is created
  */
-export function createSearchRequestInit({ term, pageIndex }) {
+export function createSearchRequestInit({ term, pageIndex, featuredOnly }) {
   return {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(
-      createWorldSerachParams(term ?? '', pageIndex ?? 0)
+      createWorldSerachParams(term ?? '', pageIndex ?? 0, featuredOnly != null)
     )
   };
 }

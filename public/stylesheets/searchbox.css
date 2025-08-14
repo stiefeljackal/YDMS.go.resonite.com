@@ -1,12 +1,32 @@
 :root {
   --srch-input-spacing: 8px;
+  --srch-form-gap: 8px;
 }
 
 .search {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: auto 0;
+  grid-template-areas:
+    "search-input search-btn"
+    "search-other search-other";
+  row-gap: var(--srch-form-gap);
   position: relative;
   margin: 16px 0 24px;
+}
+
+.search__search-input-block,
+.search__search-other-block {
+  display: flex;
+  align-items: center;
+  flex: 1 1 100%;
+}
+
+.search__search-input-block {
+  grid-area: search-input;
+}
+
+.search__search-other-block {
+  grid-area: search-other;
 }
 
 .search__textinput {
@@ -22,8 +42,12 @@
 }
 
 .search__btn {
-  position: absolute;
-  right: 0;
-  margin: 0 var(--srch-input-spacing) 0 0;
+  grid-area: search-btn;
+  align-self: center;
   background: none;
+}
+
+.search__btn,
+.search__btn:active {
+  transform: translateX(calc(-100% - var(--srch-input-spacing)));
 }

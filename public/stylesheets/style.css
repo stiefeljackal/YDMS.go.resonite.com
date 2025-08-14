@@ -97,6 +97,15 @@ footer {
   width: 100%;
 }
 
+
+input::placeholder {
+  user-select: none;
+}
+
+input[type=checkbox]+label {
+  cursor: pointer;
+  user-select: none;
+
 input[type=text] {
   cursor: var(--cursor-text);
 }

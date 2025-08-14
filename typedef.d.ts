@@ -17,8 +17,12 @@ type RecordApiSearchParameters = {
 }
 
 type WorldSearchRequestParameters = import('express-serve-static-core').ParamsDictionary | {
+  /** The search string that determines what worlds to return in the results. */
   term?: string
+  /** The current page number that determines which part of the world results to return. The number `0` is the first page. */
   pageIndex: number
+  /** `true` if only featured worlds should be returned from the results; otherwise, `false`. */
+  featuredOnly: boolean
 }
 
 type WorldSearchResult = {
