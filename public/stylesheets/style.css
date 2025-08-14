@@ -131,7 +131,6 @@ input[type=text] {
   cursor: var(--cursor-pointer);
 }
 
-
 .btn:hover {
   background: #3f6a47;
   text-decoration: none;
@@ -261,4 +260,3 @@ input[type=text] {
   margin-left: 0.4em;
   margin-right: 0.4em;
 }
-
