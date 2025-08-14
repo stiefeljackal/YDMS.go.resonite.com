@@ -273,7 +273,13 @@ async function handleThumbnail(type, req, res, next) {
       return;
     }
 
-    const { imagePipe, eTag } = imageFetchResponse;
+    const { imagePipe, eTag, isOk, httpStatusCode } = imageFetchResponse;
+
+    if (!isOk) {
+      return httpStatusCode === 404
+        ? res.redirect(NO_THUMBNAIL_URL)
+        : res.status(httpStatusCode);
+    }
 
     res.set("Content-Type", "image/webp");
     res.set("eTag", eTag);
@@ -300,7 +306,12 @@ async function handle360Image(type, req, res, next) {
       return;
     }
 
-    const { imagePipe, contentType, eTag, httpStatusCode } = imageFetchResponse;
+    const { imagePipe, contentType, eTag, isOk, httpStatusCode } =
+      imageFetchResponse;
+
+    if (!isOk) {
+      return res.status(httpStatusCode).end();
+    }
 
     res.set("Content-Type", contentType);
     res.set("eTag", eTag);
@@ -324,13 +335,16 @@ async function handleImage(type, req, res, next) {
   const json = await fetchResoniteData(type, req, next);
 
   if (json == null) {
-    return;
+    return res.status(404);
   }
 
   preProcess(json, type);
 
-  if (json.thumbnailUrl == NO_THUMBNAIL_URL) {
-    return res.redirect(NO_THUMBNAIL_URL);
+  if (json.thumbnailUrl === NO_THUMBNAIL_URL) {
+    return {
+      isOk: false,
+      httpStatusCode: 404,
+    };
   }
 
   const eTagFromRequest = req.get("If-None-Match");
@@ -340,7 +354,10 @@ async function handleImage(type, req, res, next) {
   );
 
   if (!imageFetchResponse.isOk) {
-    return res.redirect(NO_THUMBNAIL_URL);
+    return {
+      isOk: false,
+      httpStatusCode: imageFetchResponse.httpStatusCode,
+    };
   } else if (!imageFetchResponse.isNewerImage) {
     res.status(304).end();
     return;
