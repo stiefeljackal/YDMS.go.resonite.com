@@ -43,7 +43,7 @@ html, body {
 
 html {
   justify-content: center;
-  cursor: var(--cursor-default)
+  cursor: var(--cursor-default);
 }
 
 body {
@@ -55,7 +55,7 @@ body {
 }
 
 a {
-  cursor: var(--cursor-pointer)
+  cursor: var(--cursor-pointer);
 }
 
 :is(h1, h2, h3, h4, h5, h6) svg {
@@ -105,6 +105,7 @@ input::placeholder {
 input[type=checkbox]+label {
   cursor: pointer;
   user-select: none;
+}
 
 input[type=text] {
   cursor: var(--cursor-text);
@@ -145,7 +146,7 @@ input[type=text] {
 }
 
 .btn--blue:hover {
-  background-color: var(--color-sub-cyan)
+  background-color: var(--color-sub-cyan);
 }
 
 .btn--blue:active {
@@ -170,13 +171,13 @@ input[type=text] {
 .btn--icon-only:hover,
 .btn--icon-only:focus {
   background: none;
-  color: var(--color-hero-green)
+  color: var(--color-hero-green);
 }
 
 .btn--icon-only.btn--blue:hover,
 .btn--icon-only.btn--blue:focus {
   background: none;
-  color: var(--color-hero-cyan)
+  color: var(--color-hero-cyan);
 }
 
 .btn--icon-only:hover {
