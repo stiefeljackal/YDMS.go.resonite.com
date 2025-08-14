@@ -25,10 +25,13 @@ function findMmcConfig(tags, entryDate) {
     isValidCompetitionTag = validCompetitionTags.has(worldTag);
     mmcConfig = config;
   }
+  
+  const isCompetitionActive = Date.now() >= mmcConfig?.startDate.getMilliseconds() && Date.now() < mmcConfig?.endDate.getMilliseconds();
 
   return {
     mmcConfig,
-    isValidCompetitionTag
+    isValidCompetitionTag,
+    isCompetitionActive
   }
 }
 
@@ -64,9 +67,17 @@ export function addMMC(worldRecord) {
 
   const { firstPublishTime, creationTime } = worldRecord;
   const tags = new Set(worldRecord.tags);
-  const { mmcConfig, isValidCompetitionTag } = findMmcConfig(tags, new Date(firstPublishTime ?? creationTime))
+  const { mmcConfig, isValidCompetitionTag, isCompetitionActive } =
+    findMmcConfig(tags, new Date(firstPublishTime ?? creationTime));
 
   if (mmcConfig == null) {
+    return worldRecord;
+  }
+
+  const categories = new Map(matchCategories(tags, mmcConfig.categories)).values().toArray();
+  const isActiveCompetitionEntry =  isCompetitionActive || categories.length > 0;
+
+  if (!isActiveCompetitionEntry) {
     return worldRecord;
   }
 
@@ -77,7 +88,7 @@ export function addMMC(worldRecord) {
       entered: isValidCompetitionTag,
       categories: isValidCompetitionTag
         // Need to handle MMC 2020 categories this way due to the dual casings for categories (e.g., "world and World", "avatar and Avatar", and "other and Other")
-        ? new Map(matchCategories(tags, mmcConfig.categories)).values().toArray()
+        ? categories
         : null,
       error: isValidCompetitionTag ? null : "Invalid Competition Tag"
     }
