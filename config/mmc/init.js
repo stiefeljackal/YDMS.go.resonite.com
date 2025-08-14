@@ -12,7 +12,7 @@ function* crawlConfigs() {
   const mmcConfigFilePaths = readdirSync(mmcDirPath)
     .filter((filename) => filename.endsWith(".json"))
     .map((filename) => join(mmcDirPath, filename))
-    .sort()
+    .sort();
 
   for (const fullpath of mmcConfigFilePaths) {
     /** @type MmcConfig */
@@ -26,7 +26,7 @@ function* crawlConfigs() {
         default:
           return value;
       }
-    })
+    });
 
     const { competitionTag, competitionOtherTag } = config;
 
@@ -42,15 +42,17 @@ function captureCategories(value, capturedCategories = [], parent = null) {
   for (const [tag, categoryConfigValue] of Object.entries(value)) {
     const categoryNode = {
       parent,
-      requiredTags: [...(parent?.requiredTags ?? []), tag]
+      requiredTags: [...(parent?.requiredTags ?? []), tag],
     };
 
     if (String(categoryConfigValue) === categoryConfigValue) {
-      capturedCategories.push(Object.freeze({
-        title: categoryConfigValue,
-        ...categoryNode,
-        tagKey: categoryNode.requiredTags.join(':').toLowerCase()
-      }));
+      capturedCategories.push(
+        Object.freeze({
+          title: categoryConfigValue,
+          ...categoryNode,
+          tagKey: categoryNode.requiredTags.join(":").toLowerCase(),
+        }),
+      );
     } else {
       captureCategories(categoryConfigValue, capturedCategories, categoryNode);
     }

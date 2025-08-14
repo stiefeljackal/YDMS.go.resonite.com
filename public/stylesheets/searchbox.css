@@ -34,7 +34,7 @@
   padding: var(--srch-input-spacing);
   padding-right: calc(var(--btn--icon-only-size) + var(--srch-input-spacing));
   margin: 0;
-  background: var(--background-alt)
+  background: var(--background-alt);
 }
 
 .search__textinput::placeholder {

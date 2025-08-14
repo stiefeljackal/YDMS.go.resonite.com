@@ -1,23 +1,23 @@
 .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
 }
 
 .grid-item {
-    border: 1px solid rgba(0, 0, 0, 0.8);
-    padding: 20px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .grid-item p {
-    margin: 5px 0;
-    font-size: 16px;
-    white-space: normal;
-    word-break: break-word;
-    text-align: center;
+  margin: 5px 0;
+  font-size: 16px;
+  white-space: normal;
+  word-break: break-word;
+  text-align: center;
 }

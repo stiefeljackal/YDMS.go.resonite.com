@@ -10,10 +10,11 @@ const MAX_RESULT_COUNT = 20;
  * @return {RecordApiSearchParameters} The search parameters that can be used to search for particular worlds.
  */
 function createWorldSerachParams(searchStr, pageIndex, onlyFeatured) {
-  const searchTerms = searchStr.trim()
+  const searchTerms = searchStr
+    .trim()
     .split(/\s+/)
-    .filter(term => !!term)
-    .map(term => term.match(/([+-])?(.+)/));
+    .filter((term) => !!term)
+    .map((term) => term.match(/([+-])?(.+)/));
 
   const optionalTags = [];
   const requiredTags = [];
@@ -21,10 +22,10 @@ function createWorldSerachParams(searchStr, pageIndex, onlyFeatured) {
 
   for (const [, modifier, term] of searchTerms) {
     switch (modifier) {
-      case '+':
+      case "+":
         requiredTags.push(term);
         break;
-      case '-':
+      case "-":
         excludedTags.push(term);
         break;
       default:
@@ -33,14 +34,14 @@ function createWorldSerachParams(searchStr, pageIndex, onlyFeatured) {
   }
 
   return {
-    recordType: 'world',
+    recordType: "world",
     count: MAX_RESULT_COUNT,
     offset: MAX_RESULT_COUNT * pageIndex,
     private: false,
     onlyFeatured,
-    sortBy: 'FirstPublishTime',
-    sortDirection: 'Descending',
-    submittedTo: 'G-Resonite',
+    sortBy: "FirstPublishTime",
+    sortDirection: "Descending",
+    submittedTo: "G-Resonite",
     optionalTags,
     requiredTags,
     excludedTags,
@@ -56,12 +57,12 @@ function createWorldSerachParams(searchStr, pageIndex, onlyFeatured) {
  */
 export function createSearchRequestInit({ term, pageIndex, featuredOnly }) {
   return {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(
-      createWorldSerachParams(term ?? '', pageIndex ?? 0, featuredOnly != null)
-    )
+      createWorldSerachParams(term ?? "", pageIndex ?? 0, featuredOnly != null),
+    ),
   };
 }

@@ -11,7 +11,7 @@
   --color-mid-green: #3f9e44;
   --color-sub-green: #24512c;
   --color-dark-green: #192d24;
-  --color-hero-red: #ff7676; 
+  --color-hero-red: #ff7676;
   --color-mid-red: #ae5458;
   --color-sub-red: #5d323a;
   --color-dark-red: #1a1318;
@@ -35,7 +35,8 @@
   --cursor-text: url("/images/cursors/typing_cursor.svg") 10 10, text;
 }
 
-html, body {
+html,
+body {
   display: flex;
   height: 100vh;
   margin: 0;
@@ -43,7 +44,7 @@ html, body {
 
 html {
   justify-content: center;
-  cursor: var(--cursor-default)
+  cursor: var(--cursor-default);
 }
 
 body {
@@ -55,7 +56,7 @@ body {
 }
 
 a {
-  cursor: var(--cursor-pointer)
+  cursor: var(--cursor-pointer);
 }
 
 :is(h1, h2, h3, h4, h5, h6) svg {
@@ -97,16 +98,16 @@ footer {
   width: 100%;
 }
 
-
 input::placeholder {
   user-select: none;
 }
 
-input[type=checkbox]+label {
+input[type="checkbox"] + label {
   cursor: pointer;
   user-select: none;
+}
 
-input[type=text] {
+input[type="text"] {
   cursor: var(--cursor-text);
 }
 
@@ -125,12 +126,16 @@ input[type=text] {
   background: #3f9e44;
   text-align: center;
   align-content: center;
-  color: #FFF;
+  color: #fff;
   font-size: 2.5em;
-  transition: background-color var(--animation-duration) linear, border-color var(--animation-duration) linear, color var(--animation-duration) linear, box-shadow var(--animation-duration) linear, transform var(--animation-duration) ease;
+  transition:
+    background-color var(--animation-duration) linear,
+    border-color var(--animation-duration) linear,
+    color var(--animation-duration) linear,
+    box-shadow var(--animation-duration) linear,
+    transform var(--animation-duration) ease;
   cursor: var(--cursor-pointer);
 }
-
 
 .btn:hover {
   background: #3f6a47;
@@ -146,7 +151,7 @@ input[type=text] {
 }
 
 .btn--blue:hover {
-  background-color: var(--color-sub-cyan)
+  background-color: var(--color-sub-cyan);
 }
 
 .btn--blue:active {
@@ -171,13 +176,13 @@ input[type=text] {
 .btn--icon-only:hover,
 .btn--icon-only:focus {
   background: none;
-  color: var(--color-hero-green)
+  color: var(--color-hero-green);
 }
 
 .btn--icon-only.btn--blue:hover,
 .btn--icon-only.btn--blue:focus {
   background: none;
-  color: var(--color-hero-cyan)
+  color: var(--color-hero-cyan);
 }
 
 .btn--icon-only:hover {
@@ -217,7 +222,8 @@ input[type=text] {
   list-style-type: disc;
 }
 
-.infobox dt, dd{
+.infobox dt,
+dd {
   display: inline;
 }
 
@@ -261,4 +267,3 @@ input[type=text] {
   margin-left: 0.4em;
   margin-right: 0.4em;
 }
-

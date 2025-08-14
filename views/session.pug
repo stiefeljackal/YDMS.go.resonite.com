@@ -1,38 +1,42 @@
 extends layout
 
 block head
-    meta(property="og:image" content=ogThumbnailUrl)
-    meta(property="og:description" content!=description)
-    meta(name="twitter:card" content="summary_large_image")
-    link(type="application/json+oembed" href=jsonUrl)
+  meta(property="og:image", content=ogThumbnailUrl)
+  meta(property="og:description", content!=description)
+  meta(name="twitter:card", content="summary_large_image")
+  link(type="application/json+oembed", href=jsonUrl)
 
 block content
-    h1 !{name}
+  h1 !{ name }
 
-    .center 
-        img(src=thumbnailUrl alt=`A preview image of the '${title}' session.` onerror=`this.onerror=null; this.src='${noThumbnailUrl}';`)
+  .center
+    img(
+      src=thumbnailUrl,
+      alt=`A preview image of the '${title}' session.`,
+      onerror=`this.onerror=null; this.src='${noThumbnailUrl}';`
+    )
 
-    dl.infobox
-        .row
-            dt Host: 
-            dd #{hostUsername}
-        .row
-            dt Version: 
-            dd #{appVersion}
-        .row
-            dt Users (#{totalJoinedUsers}/#{maxUsers}): 
-            dd #{sessionUsers.map(user => user.username).join(", ")}
-    div.center
-        a.btn(href=`ressession:///${sessionId}`) Join Session!
-    p.center 
-        a(href="https://wiki.resonite.com/go.resonite.com") Need Help?
+  dl.infobox
+    .row
+      dt Host:
+      dd #{ hostUsername }
+    .row
+      dt Version:
+      dd #{ appVersion }
+    .row
+      dt Users (#{ totalJoinedUsers }/#{ maxUsers }): 
+      dd #{ sessionUsers.map(user => user.username).join(", ") }
+  .center
+    a.btn(href=`ressession:///${sessionId}`) Join Session!
+  p.center
+    a(href="https://wiki.resonite.com/go.resonite.com") Need Help?
 
-    h2.subheading Alternative URLs 
-    ul
-        li #[strong Session Url:] 
-            span.select-all #{`ressession:///${sessionId}`}
-        li #[strong Connection Urls:] 
-            ul
-                each url in sessionURLs 
-                    li
-                        span.select-all=url
+  h2.subheading Alternative URLs
+  ul
+    li #[strong Session Url:] 
+      span.select-all #{ `ressession:///${sessionId}` }
+    li #[strong Connection Urls:] 
+      ul
+        each url in sessionURLs
+          li
+            span.select-all= url

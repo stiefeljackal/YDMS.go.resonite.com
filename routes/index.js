@@ -1,40 +1,72 @@
-import express from 'express';
-import createError from 'http-errors';
+import express from "express";
+import createError from "http-errors";
 
-import { preProcess } from '../helpers/preprocessing.js';
-import { addMMC } from '../helpers/mmc.js';
+import { preProcess } from "../helpers/preprocessing.js";
+import { addMMC } from "../helpers/mmc.js";
 
-import fs from 'node:fs';
-import { createSearchRequestInit } from '../helpers/search.js';
-import { getFovShotFromEquirectangularImage } from '../helpers/360-image-processing.js';
-import { NO_THUMBNAIL_URL } from '../helpers/constants.js';
+import fs from "node:fs";
+import { createSearchRequestInit } from "../helpers/search.js";
+import { getFovShotFromEquirectangularImage } from "../helpers/360-image-processing.js";
+import { NO_THUMBNAIL_URL } from "../helpers/constants.js";
 
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', {
-    title: 'go.resonite.com Home'
+router.get("/", function (req, res, next) {
+  res.render("index", {
+    title: "go.resonite.com Home",
   });
 });
 
-router.get('/credits', (req,res,next) => renderCredits(req,res,next));
+router.get("/credits", (req, res, next) => renderCredits(req, res, next));
 
-router.get('/session/:sessionId', (req,res, next) => handle("session", req, res, next));
-router.get(`/session/:sessionId/thumbnail`, (req, res, next) => handleThumbnail("session", req, res, next))
-router.get('/session/:sessionId/json', (req,res, next) => handleJson("session", req, res, next));
+router.get("/session/:sessionId", (req, res, next) =>
+  handle("session", req, res, next),
+);
+router.get(`/session/:sessionId/thumbnail`, (req, res, next) =>
+  handleThumbnail("session", req, res, next),
+);
+router.get("/session/:sessionId/json", (req, res, next) =>
+  handleJson("session", req, res, next),
+);
 
-router.get('/sessions', (req, res, next) => handle("sessionList", req, res, next));
-router.get('/sessions/json', (req, res, next) => handleJson("sessionList", req, res, next));
+router.get("/sessions", (req, res, next) =>
+  handle("sessionList", req, res, next),
+);
+router.get("/sessions/json", (req, res, next) =>
+  handleJson("sessionList", req, res, next),
+);
 
-router.get('/world', (req, res, next) => handle('worldList', req, res, next, createSearchRequestInit({ ...req.query, ...req.params })));
-router.get('/world/json', (req, res, next) => handleJson('worldList', req, res, next, createSearchRequestInit({ ...req.query, ...req.params })));
+router.get("/world", (req, res, next) =>
+  handle(
+    "worldList",
+    req,
+    res,
+    next,
+    createSearchRequestInit({ ...req.query, ...req.params }),
+  ),
+);
+router.get("/world/json", (req, res, next) =>
+  handleJson(
+    "worldList",
+    req,
+    res,
+    next,
+    createSearchRequestInit({ ...req.query, ...req.params }),
+  ),
+);
 
 // Register world/ and record/
 for (const word of ["world", "record"]) {
-  router.get(`/${word}/:ownerId/:recordId`, (req,res, next) => handle("world", req, res, next));
-  router.get(`/${word}/:ownerId/:recordId/thumbnail`, (req, res, next) => handleThumbnail("world", req, res, next))
-  router.get(`/${word}/:ownerId/:recordId/json`, (req,res, next) => handleJson("world", req, res, next));
+  router.get(`/${word}/:ownerId/:recordId`, (req, res, next) =>
+    handle("world", req, res, next),
+  );
+  router.get(`/${word}/:ownerId/:recordId/thumbnail`, (req, res, next) =>
+    handleThumbnail("world", req, res, next),
+  );
+  router.get(`/${word}/:ownerId/:recordId/json`, (req, res, next) =>
+    handleJson("world", req, res, next),
+  );
 }
 
 var baseUrl = "https://api.resonite.com";
@@ -51,11 +83,11 @@ function getUrl(type, req) {
     case "world":
       return `${baseUrl}/users/${req.params.ownerId}/records/${req.params.recordId}/`;
     case "worldList":
-      return `${baseUrl}/records/pagedSearch`
+      return `${baseUrl}/records/pagedSearch`;
     case "session":
       return `${baseUrl}/sessions/` + req.params.sessionId;
     case "sessionList":
-      return `${baseUrl}/sessions`
+      return `${baseUrl}/sessions`;
     default:
       throw new Error(`Unknown url type: ${type}`);
   }
@@ -71,13 +103,20 @@ function getUrl(type, req) {
  */
 async function createResoniteApiError(res, type, id = "") {
   if (res.status === 404) {
-    return createError(res.status, `We couldn't find this ${type}.\n
-    Please check that your link is valid and the ${type} is still publicly viewable.`, {
-      handleType: type,
-      [`${type}Id`]: id
-    });
+    return createError(
+      res.status,
+      `We couldn't find this ${type}.\n
+    Please check that your link is valid and the ${type} is still publicly viewable.`,
+      {
+        handleType: type,
+        [`${type}Id`]: id,
+      },
+    );
   } else if (res.status === 403) {
-    return createError(res.status, "This world is not published; therefore, it is not publicly viewable.");
+    return createError(
+      res.status,
+      "This world is not published; therefore, it is not publicly viewable.",
+    );
   }
 
   var text = await res.text();
@@ -95,44 +134,53 @@ async function createResoniteApiError(res, type, id = "") {
  * @returns
  */
 async function handle(type, req, res, next, reqInit = undefined) {
-  if (type === "session" && 'force' in req.query && req.get('Sec-Fetch-User')) {
+  if (type === "session" && "force" in req.query && req.get("Sec-Fetch-User")) {
     return res.redirect(`ressession:///${req.params.sessionId}`);
   }
 
   try {
     var apiResponse = await fetch(getUrl(type, req), reqInit);
     if (!apiResponse.ok) {
-      const { sessionId, recordId } = req.params
-      var error = await createResoniteApiError(apiResponse, type, sessionId ?? recordId);
+      const { sessionId, recordId } = req.params;
+      var error = await createResoniteApiError(
+        apiResponse,
+        type,
+        sessionId ?? recordId,
+      );
       return next(error);
     }
 
     var json = await apiResponse.json();
 
-    if (type ==="world" && json.recordType !== "world") {
-      return next(createError(400, "go.resonite.com only works for Session and world link."));
+    if (type === "world" && json.recordType !== "world") {
+      return next(
+        createError(
+          400,
+          "go.resonite.com only works for Session and world link.",
+        ),
+      );
     }
 
-    if (type !== 'world' && type !== 'session'){
+    if (type !== "world" && type !== "session") {
       json.title = getOpenGraphTitle(type);
     }
 
     json = preProcess(json, type);
     json = addMetadata(type, json, req, reqInit);
 
-    if (type =="world") {
+    if (type == "world") {
       json = addMMC(json);
     }
 
     res.status(200).render(type, json);
   } catch (error) {
-    return handleThrownError(error, next)
+    return handleThrownError(error, next);
   }
 }
 
 /**
  * Adds metadata to the json response that is used for the pug renderer.
- * 
+ *
  * @param {HandleType} pageType The type of information this is whether it is a world or session.
  * @param {BaseWorldSessionInfo} json The JSON result from the Resonite API based on the given handle type.
  * @param {import('express').Request} req The web request information.
@@ -144,13 +192,13 @@ function addMetadata(pageType, json, req, reqInit = undefined) {
 
   const ogThumbnailUrl = new URL(urlPath);
   if (json.thumbnailUrl !== NO_THUMBNAIL_URL) {
-    ogThumbnailUrl.pathname += '/thumbnail';
+    ogThumbnailUrl.pathname += "/thumbnail";
   } else {
     ogThumbnailUrl.pathname = NO_THUMBNAIL_URL;
   }
 
   const jsonUrl = new URL(urlPath);
-  jsonUrl.pathname += '/json';
+  jsonUrl.pathname += "/json";
 
   return Object.assign(json, {
     bodyClass: pageType,
@@ -160,7 +208,7 @@ function addMetadata(pageType, json, req, reqInit = undefined) {
     urlPath,
     ogThumbnailUrl,
     jsonUrl,
-    apiInitBody: JSON.parse(reqInit?.body ?? null)
+    apiInitBody: JSON.parse(reqInit?.body ?? null),
   });
 }
 
@@ -184,7 +232,7 @@ async function handleJson(type, req, res, next, reqInit = undefined) {
 
     var json = await apiResponse.json();
 
-    if (type ==="world" && json.recordType !== "world") {
+    if (type === "world" && json.recordType !== "world") {
       res.status(400);
       return next();
     }
@@ -195,18 +243,18 @@ async function handleJson(type, req, res, next, reqInit = undefined) {
     res.json({
       title: title,
       author_name: title,
-      author_url: req.getUrl().replace("/json",""),
+      author_url: req.getUrl().replace("/json", ""),
       provider_name: "Resonite",
       provider_url: "https://resonite.com",
     });
   } catch (error) {
-    return handleThrownError(error, next)
+    return handleThrownError(error, next);
   }
 }
 
 /**
  * Handles the thumbnail image used of the world or session for OpenGraph.
- * 
+ *
  * @param {HandleType} type The type of information this is whether it is a world or session.
  * @param {import('express').Request} req The web request information.
  * @param {import('express').Response} res The web response object.
@@ -215,7 +263,6 @@ async function handleJson(type, req, res, next, reqInit = undefined) {
  */
 async function handleThumbnail(type, req, res, next) {
   try {
-
     // The following six lines and the try/catch are utilized commonly when handling routes that require data from
     // api.resonite.com. This is a good candidate for middleware for a router that needs to fetch this info.
     var apiResponse = await fetch(getUrl(type, req));
@@ -230,23 +277,26 @@ async function handleThumbnail(type, req, res, next) {
     }
 
     res.set("Content-Type", "image/webp");
-    res.status(200).send(await getFovShotFromEquirectangularImage(json.thumbnailUrl));
-
+    res
+      .status(200)
+      .send(await getFovShotFromEquirectangularImage(json.thumbnailUrl));
   } catch (error) {
-    return handleThrownError(error, next)
+    return handleThrownError(error, next);
   }
 }
 
 /**
  * Handles errors thrown when executing the route logic.
- * 
+ *
  * @param {Error} error The error that was thrown.
  * @param {import('express').NextFunction} next The function to call to proceed to the next handler.
- * @returns 
+ * @returns
  */
 async function handleThrownError(error, next) {
   console.log(error);
-  return next(createError(503, "An error has occurred; please try again soon."));
+  return next(
+    createError(503, "An error has occurred; please try again soon."),
+  );
 }
 
 /**
@@ -257,7 +307,7 @@ async function handleThrownError(error, next) {
  */
 function getOpenGraphTitle(type) {
   var app = "Resonite";
-  switch(type) {
+  switch (type) {
     case "session":
       return `${app} Session`;
     case "world":
@@ -273,15 +323,12 @@ function getOpenGraphTitle(type) {
 
 var contributorsJson = null;
 function renderCredits(req, res, next) {
-  if (contributorsJson !== null)
-    return res.render('credits', contributorsJson);
+  if (contributorsJson !== null) return res.render("credits", contributorsJson);
 
-  const contributorsFile = fs.readFileSync('./.all-contributorsrc');
+  const contributorsFile = fs.readFileSync("./.all-contributorsrc");
   contributorsJson = JSON.parse(contributorsFile);
 
-  return res.render('credits', contributorsJson);
+  return res.render("credits", contributorsJson);
 }
-
-
 
 export default router;

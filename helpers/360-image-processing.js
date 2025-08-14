@@ -1,4 +1,4 @@
-import sharp from 'sharp';
+import sharp from "sharp";
 import { glMatrix, vec3, mat4 } from "gl-matrix";
 
 // Helps with Performance for modern JS engines
@@ -16,13 +16,13 @@ const PITCH = 0;
 const NEAR_NUM = 0.05;
 const FAR_NUM = 10;
 
-const degToRad = (deg) => deg * Math.PI / 180;
+const degToRad = (deg) => (deg * Math.PI) / 180;
 
 /**
  * Extracts a FOV shot from an equirectangular thumbnail image.
- * 
+ *
  * @param {string} url The url of the thumbnail image.
- * @returns 
+ * @returns
  */
 export async function getFovShotFromEquirectangularImage(url) {
   const response = await fetch(url);
@@ -34,7 +34,13 @@ export async function getFovShotFromEquirectangularImage(url) {
   const outputData = new Uint8Array(OUTPUT_WIDTH * OUTPUT_HEIGHT * 4);
 
   const projectionMtx = mat4.create();
-  mat4.perspective(projectionMtx, degToRad(FOV), OUTPUT_WIDTH / OUTPUT_HEIGHT, NEAR_NUM, FAR_NUM);
+  mat4.perspective(
+    projectionMtx,
+    degToRad(FOV),
+    OUTPUT_WIDTH / OUTPUT_HEIGHT,
+    NEAR_NUM,
+    FAR_NUM,
+  );
 
   const viewMtx = mat4.create();
   mat4.rotateX(viewMtx, viewMtx, degToRad(PITCH));
@@ -42,7 +48,6 @@ export async function getFovShotFromEquirectangularImage(url) {
 
   for (let y = 0; y < OUTPUT_HEIGHT; y++) {
     for (let x = 0; x < OUTPUT_WIDTH; x++) {
-    
       const normalizedX = (x / OUTPUT_WIDTH) * 2 - 1;
       const normalizedY = (y / OUTPUT_HEIGHT) * 2 - 1;
 
@@ -58,8 +63,8 @@ export async function getFovShotFromEquirectangularImage(url) {
       const latitude = Math.asin(dirY);
 
       // UV mapping for equirectangular images
-      const u = 0.5 + (longitude / (2 * Math.PI));
-      const v = 0.5 - (latitude / Math.PI);
+      const u = 0.5 + longitude / (2 * Math.PI);
+      const v = 0.5 - latitude / Math.PI;
 
       // Map UV to pixel coordinates and copy data to output buffer
       const srcX = Math.floor(u * inputWidth);
@@ -77,16 +82,19 @@ export async function getFovShotFromEquirectangularImage(url) {
 
   const outputBuffer = await sharp(outputData, {
     raw: {
-      width: OUTPUT_WIDTH, 
+      width: OUTPUT_WIDTH,
       height: OUTPUT_HEIGHT,
-      channels: CHANNELS
-    }
-  }).extract({
-    width: OUTPUT_WIDTH,
-    height: OUTPUT_EXTRACT_HEIGHT,
-    top: OUTPUT_EXTRACT_TOP,
-    left: 0
-  }).webp().toBuffer();
+      channels: CHANNELS,
+    },
+  })
+    .extract({
+      width: OUTPUT_WIDTH,
+      height: OUTPUT_EXTRACT_HEIGHT,
+      top: OUTPUT_EXTRACT_TOP,
+      left: 0,
+    })
+    .webp()
+    .toBuffer();
 
   return outputBuffer;
 }
