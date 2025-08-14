@@ -1,4 +1,8 @@
 :root {
+  --color-neutrals-dark: #11151d;
+  --color-neutrals-mid: #2b2f35;
+  --color-neutrals-sub: #86888b;
+  --color-neutrals-light: #e1e1e0;
   --color-hero-yellow: #f8f770;
   --color-mid-yellow: #a0a14e;
   --color-sub-yellow: #484a2c;
@@ -7,30 +11,39 @@
   --color-mid-green: #3f9e44;
   --color-sub-green: #24512c;
   --color-dark-green: #192d24;
-  --color-hero-blue: #61d1fa;
-  --color-mid-blue: #458fab;
-  --color-sub-blue: #284c5d;
-  --color-dark-blue: #1a2a36;
   --color-hero-red: #ff7676; 
+  --color-mid-red: #ae5458;
+  --color-sub-red: #5d323a;
+  --color-dark-red: #1a1318;
+  --color-hero-purple: #ba64f2;
+  --color-mid-purple: #824aab;
+  --color-sub-purple: #492f64;
+  --color-dark-purple: #241e35;
+  --color-hero-cyan: #61d1fa;
+  --color-mid-cyan: #458fab;
+  --color-sub-cyan: #284c5d;
+  --color-dark-cyan: #1a2a36;
+  --color-hero-orange: #e69e50;
+  --color-mid-orange: #976c3d;
+  --color-sub-orange: #48392a;
+  --color-dark-orange: #292423;
   --background-body: #11151d;
   --border-radius: 8px;
   --btn--icon-only-size: 36px;
-}
-
-/* For chrome */
-a:-webkit-any-link {
-  cursor: url("/images/cursors/SVG/Color_InteractCursor.svg") 8 8, pointer;
+  --cursor-default: url("/images/cursors/default_cursor.svg") 8 8, default;
+  --cursor-pointer: url("/images/cursors/interact_cursor.svg") 8 8, pointer;
+  --cursor-text: url("/images/cursors/typing_cursor.svg") 10 10, text;
 }
 
 html, body {
   display: flex;
   height: 100vh;
   margin: 0;
-  cursor: url("/images/cursors/SVG/Color_Cursor.svg") 8 8, default;
 }
 
 html {
   justify-content: center;
+  cursor: var(--cursor-default)
 }
 
 body {
@@ -41,8 +54,8 @@ body {
   padding: 20px 10px;
 }
 
-a:hover{
-  cursor: url("/images/cursors/SVG/Color_InteractCursor.svg") 8 8, pointer;
+a {
+  cursor: var(--cursor-pointer)
 }
 
 :is(h1, h2, h3, h4, h5, h6) svg {
@@ -84,6 +97,7 @@ footer {
   width: 100%;
 }
 
+
 input::placeholder {
   user-select: none;
 }
@@ -91,6 +105,15 @@ input::placeholder {
 input[type=checkbox]+label {
   cursor: pointer;
   user-select: none;
+
+input[type=text] {
+  cursor: var(--cursor-text);
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .btn {
@@ -105,6 +128,7 @@ input[type=checkbox]+label {
   color: #FFF;
   font-size: 2.5em;
   transition: background-color var(--animation-duration) linear, border-color var(--animation-duration) linear, color var(--animation-duration) linear, box-shadow var(--animation-duration) linear, transform var(--animation-duration) ease;
+  cursor: var(--cursor-pointer);
 }
 
 
@@ -118,15 +142,15 @@ input[type=checkbox]+label {
 }
 
 .btn--blue {
-  background-color: var(--color-mid-blue);
+  background-color: var(--color-mid-cyan);
 }
 
 .btn--blue:hover {
-  background-color: var(--color-sub-blue)
+  background-color: var(--color-sub-cyan)
 }
 
 .btn--blue:active {
-  background-color: var(--color-dark-blue);
+  background-color: var(--color-dark-cyan);
 }
 
 .btn--disabled {
@@ -153,7 +177,7 @@ input[type=checkbox]+label {
 .btn--icon-only.btn--blue:hover,
 .btn--icon-only.btn--blue:focus {
   background: none;
-  color: var(--color-hero-blue)
+  color: var(--color-hero-cyan)
 }
 
 .btn--icon-only:hover {
@@ -165,11 +189,11 @@ input[type=checkbox]+label {
 }
 
 .btn--icon-only.btn--blue:hover {
-  background-color: var(--color-dark-blue);
+  background-color: var(--color-dark-cyan);
 }
 
 .btn--icon-only.btn--blue:active {
-  background-color: var(--color-sub-blue);
+  background-color: var(--color-sub-cyan);
 }
 
 .btn svg {
