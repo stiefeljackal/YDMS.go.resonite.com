@@ -1,0 +1,13 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "eslint.validate": [
+    "javascript",
+    "pug"
+  ],
+  "eslint.format.enable": false,
+  "eslint.lintTask.enable": true,
+  "[json]": {
+    "editor.formatOnSave": false
+  }
+}
