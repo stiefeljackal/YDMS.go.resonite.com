@@ -11,8 +11,13 @@ block head
   link(rel='stylesheet' href='/stylesheets/pagination.css')
 
 block content
+  - const featuredOnly = query.featuredOnly?.match(/^1?$/)
+
   h1 World List
   +searchbox(query.term, 'Search for worlds')(action='')
+    .search__input-block
+      input(type='checkbox' name='featuredOnly' id='featuredOnly' value='1' checked=featuredOnly)
+      label(for='featuredOnly') Featured Only
   hr
   if (records.length)
     ol.listing

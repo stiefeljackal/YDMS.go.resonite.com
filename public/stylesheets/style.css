@@ -84,6 +84,15 @@ footer {
   width: 100%;
 }
 
+input::placeholder {
+  user-select: none;
+}
+
+input[type=checkbox]+label {
+  cursor: pointer;
+  user-select: none;
+}
+
 .btn {
   box-sizing: border-box;
   appearance: button;
