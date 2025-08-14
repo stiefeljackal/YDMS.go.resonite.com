@@ -351,7 +351,7 @@ async function handleImage(type, req, res, next) {
 
 /**
  * Fetch data for a world or session from SkyFrost (i.e., Resonite).
- * 
+ *
  * @param {HandleType} type The type of information this is whether it is a world or session.
  * @param {import('express').Request} req The web request information.
  * @returns The API response from Resonite's Cloud.
