@@ -1,14 +1,19 @@
-import DOMPurify from 'isomorphic-dompurify';
+import DOMPurify from "isomorphic-dompurify";
 import { NO_THUMBNAIL_URL } from "./constants.js";
 
 const COLOR_REGEX = /<color[=\s]\s*(?<colorValue>("?).+?\2)\s*>/gi;
 
-const COLOR_HEX_REGEX = /^(?<hexValue>#[\da-f]{8}|#[\da-f]{6}|#[\da-f]{3,4})$/i
-const COLOR_PALETTE_REGEX = /^("?)(?<paletteName>hero|mid|sub|dark)\.(?<colorName>yellow|green|red|purple|cyan|orange)\1$|^("?)(?<paletteName>neutrals)\.(?<colorName>dark|mid|light)\4$/i
-const COLOR_NAME_REGEX = /^("?)(?<colorName>white|gray|black|red|green|blue|yellow|cyan|magenta|orange|purple|lime|pink|brown|clear)\1$/i
+const COLOR_HEX_REGEX = /^(?<hexValue>#[\da-f]{8}|#[\da-f]{6}|#[\da-f]{3,4})$/i;
+const COLOR_PALETTE_REGEX =
+  /^("?)(?<paletteName>hero|mid|sub|dark)\.(?<colorName>yellow|green|red|purple|cyan|orange)\1$|^("?)(?<paletteName>neutrals)\.(?<colorName>dark|mid|light)\4$/i;
+const COLOR_NAME_REGEX =
+  /^("?)(?<colorName>white|gray|black|red|green|blue|yellow|cyan|magenta|orange|purple|lime|pink|brown|clear)\1$/i;
 
 function sanitizeHTML(input) {
-    return DOMPurify.sanitize(input, {ALLOWED_TAGS: ['span'], ALLOWED_ATTR: ['style']});
+  return DOMPurify.sanitize(input, {
+    ALLOWED_TAGS: ["span"],
+    ALLOWED_ATTR: ["style"],
+  });
 }
 
 /**
@@ -18,12 +23,12 @@ function sanitizeHTML(input) {
  * @returns The processed text that was sanitized.
  */
 function stripTags(input) {
-    return DOMPurify.sanitize(input, {ALLOWED_TAGS: []});
+  return DOMPurify.sanitize(input, { ALLOWED_TAGS: [] });
 }
 
 /**
  * Converts the world or session name to its HTML equivalent.
- * 
+ *
  * **Note**: Currently, only a simple regex replacement for color is used. In the future, a lexer will be used to
  * properly parse FrooxEngine tags.
  *
@@ -31,30 +36,32 @@ function stripTags(input) {
  * @returns The processed world or session name that was sanitized.
  */
 export function preProcessName(name) {
-  const htmlName = name?.replace(COLOR_REGEX, (matchedString, ...groups) => {
-    const { colorValue } = groups.at(-1);
+  const htmlName = name
+    ?.replace(COLOR_REGEX, (matchedString, ...groups) => {
+      const { colorValue } = groups.at(-1);
 
-    /** @type RegExpExecArray */
-    let valueMatch;
-    /** @type string */
-    let validColorValue;
+      /** @type RegExpExecArray */
+      let valueMatch;
+      /** @type string */
+      let validColorValue;
 
-    if (valueMatch = COLOR_HEX_REGEX.exec(colorValue)) {
-      validColorValue = valueMatch.groups.hexValue.toLowerCase();
-    } else if (valueMatch = COLOR_PALETTE_REGEX.exec(colorValue)) {
-      const { paletteName, colorName } = valueMatch.groups;
+      if ((valueMatch = COLOR_HEX_REGEX.exec(colorValue))) {
+        validColorValue = valueMatch.groups.hexValue.toLowerCase();
+      } else if ((valueMatch = COLOR_PALETTE_REGEX.exec(colorValue))) {
+        const { paletteName, colorName } = valueMatch.groups;
 
-      validColorValue = `var(--color-${paletteName.toLowerCase()}-${colorName.toLowerCase()})`
-    } else if (valueMatch = COLOR_NAME_REGEX.exec(colorValue)) {
-      const colorName = valueMatch.groups.colorName.toLowerCase();
-      
-      validColorValue = colorName !== "clear" ? colorName : "transparent";
-    }
+        validColorValue = `var(--color-${paletteName.toLowerCase()}-${colorName.toLowerCase()})`;
+      } else if ((valueMatch = COLOR_NAME_REGEX.exec(colorValue))) {
+        const colorName = valueMatch.groups.colorName.toLowerCase();
 
-    return valueMatch == null
-      ? matchedString
-      : `<span style="color: ${validColorValue}">`;
-  }).replaceAll('</color>', '</span>');
+        validColorValue = colorName !== "clear" ? colorName : "transparent";
+      }
+
+      return valueMatch == null
+        ? matchedString
+        : `<span style="color: ${validColorValue}">`;
+    })
+    .replaceAll("</color>", "</span>");
 
   return sanitizeHTML(htmlName);
 }
@@ -70,11 +77,12 @@ function preProcessSession(json) {
     json.thumbnailUrl = NO_THUMBNAIL_URL;
   }
 
-  json.description = `Host: ${json.hostUsername}.\n` +
-        `Users ${json.totalJoinedUsers}/${json.maxUsers}:${json.sessionUsers.map(user => user.username).join(", ")}.\n`+
+  json.description =
+    `Host: ${json.hostUsername}.\n` +
+    `Users ${json.totalJoinedUsers}/${json.maxUsers}:${json.sessionUsers.map((user) => user.username).join(", ")}.\n` +
     `Version: ${json.appVersion}`;
 
-    return json;
+  return json;
 }
 
 /**
@@ -84,19 +92,19 @@ function preProcessSession(json) {
  * @param {SessionCount} int number of sessions to return for the page
  * @returns The transformed sessions object for viewing.
  */
-function preProcessSessionList(json, count){
-    const sessions = json
-        .sort((a, b) => b.totalJoinedUsers - a.totalJoinedUsers)
-        .slice(0, count);
+function preProcessSessionList(json, count) {
+  const sessions = json
+    .sort((a, b) => b.totalJoinedUsers - a.totalJoinedUsers)
+    .slice(0, count);
 
-    json.sessions = sessions.map((session) => {
-        // We convert the name here since the JSON format for
-        // this is different from the other responses
-        session.name = preProcessName(session.name);
-        return preProcessSession(session);
-    });
+  json.sessions = sessions.map((session) => {
+    // We convert the name here since the JSON format for
+    // this is different from the other responses
+    session.name = preProcessName(session.name);
+    return preProcessSession(session);
+  });
 
-    return json;
+  return json;
 }
 
 /**
@@ -109,12 +117,14 @@ function preProcessWorld(json) {
   if (json.description) {
     // Sanitize the Open Graph meta description from tags
     json.ogDescription = stripTags(json.description);
-    
+
     json.description = preProcessName(json.description);
   }
 
   if (json.thumbnailUri) {
-    json.thumbnailUri = json.thumbnailUri.replace("resdb:///", "https://assets.resonite.com/").replace(".webp", "");
+    json.thumbnailUri = json.thumbnailUri
+      .replace("resdb:///", "https://assets.resonite.com/")
+      .replace(".webp", "");
   } else {
     json.thumbnailUri = NO_THUMBNAIL_URL;
   }
@@ -141,9 +151,9 @@ function preProcessWorld(json) {
  */
 function preProcessWorldList(json) {
   for (const world of json.records) {
-    world.name = preProcessName(world.name)
-    world.goUri = `/world/${world.ownerId}/${world.id}`
-    preProcessWorld(world)
+    world.name = preProcessName(world.name);
+    world.goUri = `/world/${world.ownerId}/${world.id}`;
+    preProcessWorld(world);
   }
 
   return json;
@@ -170,7 +180,6 @@ function addMetadata(json) {
  * @return {BaseWorldSessionInfo} The same preprocessed world or session object for viewing.
  */
 export function preProcess(json, type) {
-
   if (type !== "sessionList" && json.name) {
     json.title = stripTags(json.name); // No tags in title
 

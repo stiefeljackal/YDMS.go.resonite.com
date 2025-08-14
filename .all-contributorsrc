@@ -7,70 +7,54 @@
       "name": "ProbablePrime",
       "avatar_url": "https://avatars.githubusercontent.com/u/8791132?v=4",
       "profile": "http://probableprime.co.uk/",
-      "contributions": [
-        "code"
-      ]
+      "contributions": ["code"]
     },
     {
       "login": "stiefeljackal",
       "name": "Stiefel Jackal",
       "avatar_url": "https://avatars.githubusercontent.com/u/20023996?v=4",
       "profile": "https://github.com/stiefeljackal",
-      "contributions": [
-        "code"
-      ]
+      "contributions": ["code"]
     },
     {
       "login": "jae1911",
       "name": "Jae Lo Presti",
       "avatar_url": "https://avatars.githubusercontent.com/u/76598503?v=4",
       "profile": "https://j4.lc/",
-      "contributions": [
-        "code"
-      ]
+      "contributions": ["code"]
     },
     {
       "login": "bredo228",
       "name": "bredo",
       "avatar_url": "https://avatars.githubusercontent.com/u/29470709?v=4",
       "profile": "http://bredo.tech",
-      "contributions": [
-        "code"
-      ]
+      "contributions": ["code"]
     },
     {
       "login": "blhsrwznrghfzpr",
       "name": "yoshi",
       "avatar_url": "https://avatars.githubusercontent.com/u/7685946?v=4",
       "profile": "https://github.com/blhsrwznrghfzpr",
-      "contributions": [
-        "code"
-      ]
+      "contributions": ["code"]
     },
     {
       "login": "badhaloninja",
       "name": "badhaloninja",
       "avatar_url": "https://avatars.githubusercontent.com/u/1661241?v=4",
       "profile": "http://badhalo.ninja",
-      "contributions": [
-        "code"
-      ]
+      "contributions": ["code"]
     },
     {
       "login": "Mhowser",
       "name": "Marcus Howser",
       "avatar_url": "https://avatars.githubusercontent.com/u/24195572?v=4",
       "profile": "https://github.com/Mhowser",
-      "contributions": [
-        "code"
-      ]
+      "contributions": ["code"]
     }
   ],
   "repoType": "github",
   "commitConvention": "angular",
-  "files": [
-    "README.md"
-  ],
+  "files": ["README.md"],
   "commitType": "docs",
   "contributorsPerLine": 7
 }
