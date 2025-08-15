@@ -1,5 +1,5 @@
 # Base image
-FROM node:23-alpine
+FROM node:23
 
 # Setting work directory
 WORKDIR /usr/src/app
@@ -7,6 +7,7 @@ WORKDIR /usr/src/app
 # We do this as a separate step as it optimizes the build of the image. Docker runs in stages and caches each stage.
 COPY package*.json ./
 RUN npm install
+RUN npm install --cpu=x64 --os=linux --libc=glibc sharp
 
 # Copy source files
 COPY . .

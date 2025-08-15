@@ -1,0 +1,20 @@
+{
+  "icons": [
+    {
+      "src": "/images/favicons/go_resonite_logo.192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/images/favicons/go_resonite_logo.512x512_maskable.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/images/favicons/go_resonite_logo.512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}

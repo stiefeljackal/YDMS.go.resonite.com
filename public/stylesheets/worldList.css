@@ -4,7 +4,7 @@
 }
 
 .listing {
-  display:flex;
+  display: flex;
   flex-direction: column;
   gap: var(--listing-spacing);
   padding: 0;
@@ -44,7 +44,7 @@
   max-height: 140px;
 }
 
-.listing-item > .thumbnail > img  {
+.listing-item > .thumbnail > img {
   transition: transform ease-out 0.2s;
 }
 
@@ -68,7 +68,7 @@
 }
 
 .listing-item__featured-ribbon {
-  color: var(--color-hero-yellow)
+  color: var(--color-hero-yellow);
 }
 
 .listing-item:hover > .listing-item__heading {
@@ -85,7 +85,7 @@
   -webkit-line-clamp: var(--listing-line-clamp);
   -webkit-box-orient: vertical;
   line-clamp: var(--listing-line-clamp);
-  align-self: self-start
+  align-self: self-start;
 }
 
 @media (max-width: 600px) {

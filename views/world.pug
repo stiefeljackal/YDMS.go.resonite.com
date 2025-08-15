@@ -4,59 +4,62 @@ include mixins/mmc.pug
 include mixins/svg.pug
 
 block head
-    meta(property="og:type" content="resonite.world")
-    meta(property="og:image" content=ogThumbnailUrl)
-    meta(property="og:description" content=ogDescription)
-    meta(name="twitter:card" content="summary_large_image")
-    link(type="application/json+oembed" href=jsonUrl)
+  meta(property="og:type", content="resonite.world")
+  meta(property="og:image", content=ogThumbnailUrl)
+  meta(property="og:description", content=ogDescription)
+  meta(name="twitter:card", content="summary_large_image")
+  link(type="application/json+oembed", href=jsonUrl)
 
 block content
-    h1 !{name}
-    
-    if isFeatured
-        ul.badge-list
-            li.badge.badge-yellow
-                +svg('/images/reso_featured_ribbon.svg#featured_ribbon')(aria-hidden=true)
-                a(href="https://wiki.resonite.com/Category:Featured_Worlds") Featured World
+  h1 !{ name }
+  
+  if isFeatured
+    ul.badge-list
+      li.badge.badge-yellow
+        +svg('/images/reso_featured_ribbon.svg#featured_ribbon')(aria-hidden=true)
+        a(href="https://wiki.resonite.com/Category:Featured_Worlds") Featured World
 
-    
-    .center
-        img(src=thumbnailUri alt=`A preview image of the '${title}' world.` onerror=`this.onerror=null; this.src='${noThumbnailUrl}';`)
+  .center
+    img(
+      src=thumbnailUri,
+      alt=`A preview image of the '${title}' world.`,
+      onerror=`this.onerror=null; this.src='${noThumbnailUrl}';`
+    )
 
-    dl.infobox
-        .row
-            dt By: 
-            dd #{ownerName}
-        .row
-            dt Description: 
-            dd !{description}
-        .row
-            dt Created on: 
-            dd #{creationTime}
-        if isPublished
-            .row
-                dt First published on: 
-                dd #{firstPublishTime}
-        else
-            .row
-                dt Published: 
-                dd.warning Not Published
-        .row
-            dt Last modified on: 
-            dd #{lastModificationTime}
-        .row
-            dt Visits: 
-            dd #{visits}
-        .row
-            dt Tags: 
-            dd #{tags.join(", ")}
-    div.center
-        a.btn(href=`resrec:///${ownerId}/${id}`) Open World!
-    p.center 
-        a(href="https://wiki.resonite.com/go.resonite.com") Need Help?
-    h2.subheading Alternative URLs 
-    ul
-        li #[strong Record Url:] 
-            span.select-all #{`resrec:///${ownerId}/${id}`}
-    if mmc
-        +mmcMixin(mmc)
+  dl.infobox
+    .row
+      dt By:
+      dd #{ ownerName }
+    .row
+      dt Description:
+      dd !{ description }
+    .row
+      dt Created on:
+      dd #{ creationTime }
+    if isPublished
+      .row
+        dt First published on:
+        dd #{ firstPublishTime }
+    else
+      .row
+        dt Published:
+        dd.warning Not Published
+    .row
+      dt Last modified on:
+      dd #{ lastModificationTime }
+    .row
+      dt Visits:
+      dd #{ visits }
+    .row
+      dt Tags:
+      dd #{ tags.join(", ") }
+  .center
+    a.btn(href=`resrec:///${ownerId}/${id}`) Open World!
+  p.center
+    a(href="https://wiki.resonite.com/go.resonite.com") Need Help?
+  h2.subheading Alternative URLs
+  ul
+    li #[strong Record Url:] 
+      span.select-all #{ `resrec:///${ownerId}/${id}` }
+  if mmc
+    +mmcMixin(mmc)
