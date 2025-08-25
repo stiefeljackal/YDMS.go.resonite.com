@@ -1,8 +1,6 @@
-include svg.pug
-
-mixin badge(text, colorName, svg, url)
+mixin badge(text, colorName, url)
   li.badge(class=`badge-${colorName}`)
-    +svg(svg)(aria-hidden=true)
+    block
     if(url)
       a(href=url) #{ text }
     else
