@@ -18,6 +18,9 @@ block content
     if isFeatured
       +badge('Featured World', 'yellow', 'https://wiki.resonite.com/Category:Featured_Worlds')
         +svg('/images/reso_featured_ribbon.svg#featured_ribbon')(aria-hidden=true)
+    if mmc
+      +badge('MMC World', 'mmc', 'https://wiki.resonite.com/MMC')
+        img(src='/images/MMC.png')(aria-hidden=true)
 
   .center
     img(

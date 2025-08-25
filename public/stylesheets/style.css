@@ -27,6 +27,8 @@
   --color-mid-orange: #976c3d;
   --color-sub-orange: #48392a;
   --color-dark-orange: #292423;
+  --color-mmc-sub: #8f0089;
+  --color-mmc-hero: #ff93fb;
   --background-body: #11151d;
   --border-radius: 8px;
   --btn--icon-only-size: 36px;
@@ -296,4 +298,8 @@ dd {
 .badge-yellow {
   background-color: var(--color-sub-yellow);
   color: var(--color-hero-yellow);
+}
+.badge-mmc {
+  background-color: var(--color-mmc-sub);
+  color: var(--color-mmc-hero);
 }
