@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix",
     "format": "prettier --check .",
-    "format:fix": "prettier --write ."
+    "format:fix": "prettier --write .",
+    "verify:dependabot-schema": "npx @bugron/validate-dependabot-yaml ./.github/dependabot.yml"
   },
   "exports": "./start.js",
   "dependencies": {
