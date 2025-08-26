@@ -31,30 +31,30 @@ block content
 
   dl.infobox
     .row
-      dt By:
+      dt By:#{ ' ' }
       dd #{ ownerName }
     .row
-      dt Description:
+      dt Description:#{ ' ' }
       dd !{ description }
     .row
-      dt Created on:
+      dt Created on:#{ ' ' }
       dd #{ creationTime }
     if isPublished
       .row
-        dt First published on:
+        dt First published on:#{ ' ' }
         dd #{ firstPublishTime }
     else
       .row
-        dt Published:
+        dt Published:#{ ' ' }
         dd.warning Not Published
     .row
-      dt Last modified on:
+      dt Last modified on:#{ ' ' }
       dd #{ lastModificationTime }
     .row
-      dt Visits:
+      dt Visits:#{ ' ' }
       dd #{ visits }
     .row
-      dt Tags:
+      dt Tags:#{ ' ' }
       dd #{ tags.join(", ") }
   .center
     a.btn(href=`resrec:///${ownerId}/${id}`) Open World!

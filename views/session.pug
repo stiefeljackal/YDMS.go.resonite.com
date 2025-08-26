@@ -18,13 +18,13 @@ block content
 
   dl.infobox
     .row
-      dt Host:
+      dt Host:#{ ' ' }
       dd #{ hostUsername }
     .row
-      dt Version:
+      dt Version:#{ ' ' }
       dd #{ appVersion }
     .row
-      dt Users (#{ totalJoinedUsers }/#{ maxUsers }): 
+      dt Users (#{ totalJoinedUsers }/#{ maxUsers }):#{ ' ' }
       dd #{ sessionUsers.map(user => user.username).join(", ") }
   .center
     a.btn(href=`ressession:///${sessionId}`) Join Session!
