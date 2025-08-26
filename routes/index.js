@@ -12,7 +12,7 @@ import { NO_THUMBNAIL_URL } from "../helpers/constants.js";
 var router = express.Router();
 
 /* GET home page. */
-router.get("/", function (req, res, next) {
+router.get("/", function (req, res) {
   res.render("index", {
     title: "go.resonite.com Home",
   });
@@ -322,7 +322,7 @@ function getOpenGraphTitle(type) {
 }
 
 var contributorsJson = null;
-function renderCredits(req, res, next) {
+function renderCredits(req, res) {
   if (contributorsJson !== null) return res.render("credits", contributorsJson);
 
   const contributorsFile = fs.readFileSync("./.all-contributorsrc");

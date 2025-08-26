@@ -274,24 +274,23 @@ dd {
   list-style: none;
   margin: 0px 0px 10px;
   padding: 0px;
-  display: inline-flex
+  display: inline-flex;
 }
 .badge {
   padding: 4px 8px;
   margin: 0px 5px;
-  
   border-radius: 8px;
   display: inline-flex;
   align-items: flex-end;
   gap: 4px;
-
   font-size: 1.4rem;
   font-weight: 600;
 }
 .badge a {
   color: unset;
 }
-.badge svg, .badge img {
+.badge svg,
+.badge img {
   width: 1.4em;
   height: 1.4em;
 }

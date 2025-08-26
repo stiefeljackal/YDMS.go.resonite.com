@@ -13,14 +13,14 @@ block head
 
 block content
   h1 !{ name }
-  
+
   ul.badge-list
     if isFeatured
-      +badge('Featured World', 'yellow', 'https://wiki.resonite.com/Category:Featured_Worlds')
-        +svg('/images/reso_featured_ribbon.svg#featured_ribbon')(aria-hidden=true)
+      +badge("Featured World", "yellow", "https://wiki.resonite.com/Category:Featured_Worlds")
+        +svg("/images/reso_featured_ribbon.svg#featured_ribbon")(aria-hidden)
     if mmc
-      +badge('MMC World', 'mmc', 'https://wiki.resonite.com/MMC')
-        img(src='/images/MMC.png')(aria-hidden=true)
+      +badge("MMC World", "mmc", "https://wiki.resonite.com/MMC")
+        img(src="/images/MMC.png")(aria-hidden)
 
   .center
     img(
