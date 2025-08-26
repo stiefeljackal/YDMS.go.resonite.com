@@ -32,6 +32,8 @@
   --background-body: #11151d;
   --border-radius: 8px;
   --btn--icon-only-size: 36px;
+  --badge-content-gap: 5px;
+  --badge-image-size: 1.4em;
   --cursor-default: url("/images/cursors/default_cursor.svg") 8 8, default;
   --cursor-pointer: url("/images/cursors/interact_cursor.svg") 8 8, pointer;
   --cursor-text: url("/images/cursors/typing_cursor.svg") 10 10, text;
@@ -271,28 +273,36 @@ dd {
 }
 
 .badge-list {
-  list-style: none;
-  margin: 0px 0px 10px;
-  padding: 0px;
   display: inline-flex;
+  gap: 10px;
+  list-style: none;
+  margin: 0 0 10px;
+  padding: 0;
 }
 .badge {
-  padding: 4px 8px;
-  margin: 0px 5px;
   border-radius: 8px;
   display: inline-flex;
   align-items: flex-end;
   gap: 4px;
   font-size: 1.4rem;
   font-weight: 600;
+  transition: background-color var(--animation-duration) linear;
+  user-select: none;
+}
+.badge .badge-content {
+  display: flex;
+  align-items: center;
+  gap: var(--badge-content-gap);
+  padding: 4px 8px;
 }
 .badge a {
   color: unset;
 }
 .badge svg,
 .badge img {
-  width: 1.4em;
-  height: 1.4em;
+  width: var(--badge-image-size);
+  height: var(--badge-image-size);
+  pointer-events: none;
 }
 .badge-yellow {
   background-color: var(--color-sub-yellow);

@@ -1,7 +1,7 @@
+include conditional-a.pug
+
 mixin badge(text, colorName, url)
   li.badge(class=`badge-${colorName}`)
-    block
-    if url
-      a(href=url) #{ text }
-    else
+    +conditional-a(url).badge-content
+      block
       | #{ text }
