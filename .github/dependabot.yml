@@ -10,6 +10,6 @@ updates:
     schedule:
       interval: "weekly"
     allow:
-      - dependency-type: "production" # dependencies
+      - dependency-name: "production" # dependencies
     ignore:
-      - dependency-type: "development" # devDependencies
+      - dependency-name: "development" # devDependencies
