@@ -22,7 +22,7 @@ This was put together quite quickly, to fix the needs of [go.resonite.com](https
 
 ## Contributing
 
-Please make an issue, before making a PR.
+Please make an issue, before starting work. Due to pending #29.
 
 ## Contributors
 
