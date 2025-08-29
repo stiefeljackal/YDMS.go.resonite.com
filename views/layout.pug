@@ -37,10 +37,10 @@ html(lang="en")
     style.
       @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
   body(class=bodyClass)
-    header.center.logo
-      a(href="/")
+    header.center
+      a.logo(href="/")
         img(src="/images/resonite.png", alt="")
-      a(href="/") go.resonite.com
+        | go.resonite.com
     main
       block content
         h1 Placeholder
@@ -48,10 +48,10 @@ html(lang="en")
       p.center
         span Copyright ©
         a(href="https://yellowdogman.com/imprint.html") Yellow Dog Man Studios s.r.o.
-      span.center.small.footer-links
-        a(href="/credits") Credits
-        | |
-        a(href="/") Home
-        | |
-        a(href="https://resonite.com") Main Website
-    block client-scripts
+      ul.center.small.footer-links
+        li.footer-link
+          a(href="/credits") Credits
+        li.footer-link
+          a(href="/") Home
+        li.footer-link
+          a(href="https://resonite.com") Main Website

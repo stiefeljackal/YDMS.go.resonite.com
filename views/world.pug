@@ -22,44 +22,44 @@ block client-scripts
 
 block content
   h1 !{ name }
-  
+
   ul.badge-list
     if isFeatured
-      +badge('Featured World', 'yellow', 'https://wiki.resonite.com/Category:Featured_Worlds')
-        +svg('/images/reso_featured_ribbon.svg#featured_ribbon')(aria-hidden=true)
+      +badge("Featured World", "yellow", "https://wiki.resonite.com/Category:Featured_Worlds")
+        +svg("/images/reso_featured_ribbon.svg#featured_ribbon")(aria-hidden)
     if mmc
-      +badge('MMC World', 'mmc', 'https://wiki.resonite.com/MMC')
-        img(src='/images/MMC.png')(aria-hidden=true)
+      +badge("MMC World", "mmc", "https://wiki.resonite.com/MMC")
+        img(src="/images/MMC.png", alt="")
 
   .center
     +panorama-viewer(go360ImageUrl, goThumbnailUrl, `A preview image of the '${title}' world.`)
 
   dl.infobox
     .row
-      dt By:
+      dt By:#{ ' ' }
       dd #{ ownerName }
     .row
-      dt Description:
+      dt Description:#{ ' ' }
       dd !{ description }
     .row
-      dt Created on:
+      dt Created on:#{ ' ' }
       dd #{ creationTime }
     if isPublished
       .row
-        dt First published on:
+        dt First published on:#{ ' ' }
         dd #{ firstPublishTime }
     else
       .row
-        dt Published:
+        dt Published:#{ ' ' }
         dd.warning Not Published
     .row
-      dt Last modified on:
+      dt Last modified on:#{ ' ' }
       dd #{ lastModificationTime }
     .row
-      dt Visits:
+      dt Visits:#{ ' ' }
       dd #{ visits }
     .row
-      dt Tags:
+      dt Tags:#{ ' ' }
       dd #{ tags.join(", ") }
   .center
     a.btn(href=`resrec:///${ownerId}/${id}`) Open World!

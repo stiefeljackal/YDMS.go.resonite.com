@@ -1,0 +1,7 @@
+mixin conditional-a(url)
+  if url
+    a(href=url)&attributes(attributes)
+      block
+  else
+    span&attributes(attributes)
+      block
