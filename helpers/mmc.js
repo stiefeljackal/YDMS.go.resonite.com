@@ -70,9 +70,7 @@ function* matchCategories(worldTags, categories) {
  * @returns {WorldInfo} The mutated world record that was passed in.
  */
 export function addMMC(worldRecord) {
-  if (worldRecord.ownerId === "G-Creator-Jam") {
-    return worldRecord;
-  }
+  const isOfficialWorld = worldRecord.ownerId === "G-Creator-Jam";
 
   const { firstPublishTime, creationTime } = worldRecord;
   const tags = new Set(worldRecord.tags);
@@ -83,19 +81,27 @@ export function addMMC(worldRecord) {
     return worldRecord;
   }
 
-  const categories = new Map(matchCategories(tags, mmcConfig.categories))
-    .values()
-    .toArray();
-  const isActiveCompetitionEntry = isCompetitionActive || categories.length > 0;
+  const categories = isOfficialWorld
+    ? []
+    : new Map(matchCategories(tags, mmcConfig.categories)).values().toArray();
+  const isActiveCompetitionEntry =
+    isOfficialWorld || isCompetitionActive || categories.length > 0;
 
   if (!isActiveCompetitionEntry) {
     return worldRecord;
   }
 
+  const mmcType = isOfficialWorld
+    ? "official"
+    : isValidCompetitionTag
+      ? "entry"
+      : "error";
+
   return Object.assign(worldRecord, {
     mmc: {
       year: mmcConfig.year,
       wikiPath: mmcConfig.wikiPath,
+      type: mmcType,
       entered: isValidCompetitionTag,
       categories: isValidCompetitionTag
         ? // Need to handle MMC 2020 categories this way due to the dual casings for categories (e.g., "world and World", "avatar and Avatar", and "other and Other")
