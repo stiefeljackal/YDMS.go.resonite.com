@@ -22,7 +22,7 @@ This was put together quite quickly, to fix the needs of [go.resonite.com](https
 
 ## Contributing
 
-Please make an issue, before starting work. Due to pending #29.
+Please make an issue, before starting work. Due to pending [Architecture Overhaul](https://github.com/Yellow-Dog-Man/go.resonite.com/issues/29).
 
 ## Contributors
 
