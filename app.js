@@ -46,7 +46,13 @@ app.use(function (err, req, res, _next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render("error");
+
+  switch (err.contentType) {
+    case "json":
+      return res.send(err.message);
+    default:
+      return res.render("error");
+  }
 });
 
 export default app;

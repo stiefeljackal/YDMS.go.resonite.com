@@ -15,7 +15,7 @@ import { NO_THUMBNAIL_URL } from "../helpers/constants.js";
 var router = express.Router();
 
 /* GET home page. */
-router.get("/", function (req, res) {
+router.get("/", function (_req, res) {
   res.render("index", {
     title: "go.resonite.com Home",
   });
@@ -155,7 +155,7 @@ async function handle(type, req, res, next, reqInit = undefined) {
         type,
         sessionId ?? recordId,
       );
-      return next(error);
+      return next(Object.assign(error, { contentType: "page" }));
     }
 
     var json = await apiResponse.json();
@@ -182,7 +182,7 @@ async function handle(type, req, res, next, reqInit = undefined) {
 
     res.status(200).render(type, json);
   } catch (error) {
-    return handleThrownError(error, next);
+    return handleThrownError(error, next, "page");
   }
 }
 
@@ -231,14 +231,18 @@ async function handleJson(type, req, res, next, reqInit = undefined) {
     var apiResponse = await fetch(getUrl(type, req), reqInit);
     if (!apiResponse.ok) {
       var error = await createResoniteApiError(apiResponse, type);
-      return next(error);
+      return next(
+        Object.assign(error, {
+          contentType: "json",
+        }),
+      );
     }
 
     var json = await apiResponse.json();
 
     if (type === "world" && json.recordType !== "world") {
       res.status(400);
-      return next();
+      return next({ contentType: "json" });
     }
 
     json = preProcess(json, type);
@@ -332,7 +336,7 @@ async function handle360Image(type, req, res, next) {
  * @returns {Promise<FetchImageResponse>} The response of the image fetch.
  */
 async function handleImage(type, req, res, next) {
-  const json = await fetchResoniteData(type, req, next);
+  const json = await fetchResoniteData(type, req, next, "image");
 
   if (json == null) {
     return res.status(404);
@@ -371,15 +375,17 @@ async function handleImage(type, req, res, next) {
  *
  * @param {HandleType} type The type of information this is whether it is a world or session.
  * @param {import('express').Request} req The web request information.
+ * @param {import('express').NextFunction} next The function to call to proceed to the next handler.
+ * @param {string} contentType The type of content that was being requested.
  * @returns The API response from Resonite's Cloud.
  */
-async function fetchResoniteData(type, req, next) {
+async function fetchResoniteData(type, req, next, contentType) {
   // The following seven lines are utilized commonly when handling routes that require data from
   // api.resonite.com. This is a good candidate for middleware for a router that needs to fetch this info.
   var apiResponse = await fetch(getUrl(type, req));
   if (!apiResponse.ok) {
     var error = await createResoniteApiError(apiResponse, type);
-    return next(error);
+    return next(Object.assign(error, { contentType }));
   }
   const responseJson = await apiResponse.json();
   return responseJson;
@@ -390,12 +396,15 @@ async function fetchResoniteData(type, req, next) {
  *
  * @param {Error} error The error that was thrown.
  * @param {import('express').NextFunction} next The function to call to proceed to the next handler.
+ * @param {string} contentType The type of content that was being requested.
  * @returns
  */
-async function handleThrownError(error, next) {
+async function handleThrownError(error, next, contentType) {
   console.log(error);
   return next(
-    createError(503, "An error has occurred; please try again soon."),
+    createError(503, "An error has occurred; please try again soon.", {
+      contentType,
+    }),
   );
 }
 
@@ -422,7 +431,7 @@ function getOpenGraphTitle(type) {
 }
 
 var contributorsJson = null;
-function renderCredits(req, res) {
+function renderCredits(_req, res) {
   if (contributorsJson !== null) return res.render("credits", contributorsJson);
 
   const contributorsFile = fs.readFileSync("./.all-contributorsrc");
